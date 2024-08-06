@@ -1,0 +1,116 @@
+{
+    "Mern-BoilerPlate-Blog/package.json": {
+        "description": "JSON configuration file, contains project dependencies, scripts, and metadata."
+    },
+    "Mern-BoilerPlate-Blog/README.md": {
+        "description": "Markdown file, provides project documentation, setup instructions, and usage guidelines."
+    },
+    "Mern-BoilerPlate-Blog/backend/.babelrc": {
+        "description": "Babel configuration file, used to specify Babel presets and plugins for transpiling JavaScript."
+    },
+    "Mern-BoilerPlate-Blog/backend/.eslintrc.json": {
+        "description": "ESLint configuration file, defines linting rules and settings for maintaining code quality."
+    },
+    "Mern-BoilerPlate-Blog/backend/.prettierignore": {
+        "description": "Prettier ignore file, lists files and directories to be ignored by Prettier for code formatting."
+    },
+    "Mern-BoilerPlate-Blog/backend/.prettierrc": {
+        "description": "Prettier configuration file, contains formatting rules and options for the project."
+    },
+    "Mern-BoilerPlate-Blog/backend/app.js": {
+        "description": "JavaScript file initializing the backend application, sets up middleware and routes."
+    },
+    "Mern-BoilerPlate-Blog/backend/eslint.config.js": {
+        "description": "JavaScript file configuring ESLint, specifies linting rules and environments for the project."
+    },
+    "Mern-BoilerPlate-Blog/backend/package.json": {
+        "description": "JSON configuration file for the backend, includes backend-specific dependencies and scripts."
+    },
+    "Mern-BoilerPlate-Blog/backend/server.js": {
+        "description": "JavaScript file starting the backend server, sets up the server to listen on a specified port."
+    },
+    "Mern-BoilerPlate-Blog/backend/vercel.json": {
+        "description": "Configuration file for Vercel deployment, defines deployment settings and options."
+    },
+    "Mern-BoilerPlate-Blog/backend/package-lock.json": {
+        "description": "Dependency lock file for the backend, ensures consistent installation of dependencies."
+    },
+    "Mern-BoilerPlate-Blog/backend/.env.sample": {
+        "description": "Sample environment configuration file, provides an example of required environment variables."
+    },
+    "Mern-BoilerPlate-Blog/backend/.env": {
+        "description": "Environment configuration file, contains environment variables for the project."
+    },
+    "Mern-BoilerPlate-Blog/backend/api/index.js": {
+        "description": "JavaScript file for API endpoints, sets up and defines the main API routes."
+    },
+    "Mern-BoilerPlate-Blog/backend/config/db.js": {
+        "description": "JavaScript file configuring the database connection, establishes a connection to the database."
+    },
+    "Mern-BoilerPlate-Blog/backend/config/passport.js": {
+        "description": "JavaScript file configuring Passport.js for authentication, sets up authentication strategies."
+    },
+    "Mern-BoilerPlate-Blog/backend/config/utils.js": {
+        "description": "JavaScript utility file, contains helper functions used across the project."
+    },
+    "Mern-BoilerPlate-Blog/backend/controllers/auth-controller.js": {
+        "description": "JavaScript file handling authentication logic, processing login, registration, and user sessions."
+    },
+    "Mern-BoilerPlate-Blog/backend/controllers/posts-controller.js": {
+        "description": "JavaScript file handling post-related logic, managing creation, retrieval, updating, and deletion of posts."
+    },
+    "Mern-BoilerPlate-Blog/backend/controllers/user-controller.js": {
+        "description": "JavaScript file handling user-related logic, managing user profiles and interactions."
+    },
+    "Mern-BoilerPlate-Blog/backend/data/sample_posts.json": {
+        "description": "JSON file containing sample data for posts, used for testing and development purposes."
+    },
+    "Mern-BoilerPlate-Blog/backend/data/script.js": {
+        "description": "JavaScript file, likely part of the application logic, used for data processing or other operations."
+    },
+    "Mern-BoilerPlate-Blog/backend/middlewares/auth-middleware.js": {
+        "description": "JavaScript file defining authentication middleware, used to protect routes and verify user identity."
+    },
+    "Mern-BoilerPlate-Blog/backend/middlewares/error-middleware.js": {
+        "description": "JavaScript file defining error-handling middleware, manages and logs errors occurring in the application."
+    },
+    "Mern-BoilerPlate-Blog/backend/middlewares/post-middleware.js": {
+        "description": "JavaScript file defining post-related middleware, processes requests related to post operations."
+    },
+    "Mern-BoilerPlate-Blog/backend/models/Post.js": {
+        "description": "JavaScript file defining the Post model, represents the post schema and data structure in the database."
+    },
+    "Mern-BoilerPlate-Blog/backend/models/User.js": {
+        "description": "JavaScript file defining the User model, represents the user schema and data structure in the database."
+    },
+    "Mern-BoilerPlate-Blog/backend/routes/api/posts.js": {
+        "description": "JavaScript file defining post-related API routes, handles HTTP requests and responses for posts."
+    },
+    "Mern-BoilerPlate-Blog/backend/routes/api/users.js": {
+        "description": "JavaScript file defining user-related API routes, handles HTTP requests and responses for users."
+    },
+    "Mern-BoilerPlate-Blog/frontend/src/index.js": {
+        "description": "JavaScript entry file for the frontend, sets up and renders the main React component."
+    },
+    "Mern-BoilerPlate-Blog/frontend/src/App.js": {
+        "description": "JavaScript file defining the main React component, sets up the application layout and routing."
+    },
+    "Mern-BoilerPlate-Blog/frontend/src/components/Navbar.js": {
+        "description": "JavaScript file defining the Navbar component, provides navigation links for the application."
+    },
+    "Mern-BoilerPlate-Blog/frontend/src/components/Home.js": {
+        "description": "JavaScript file defining the Home component, displays the homepage of the application."
+    },
+    "Mern-BoilerPlate-Blog/frontend/src/components/Post.js": {
+        "description": "JavaScript file defining the Post component, displays individual post details."
+    },
+    "Mern-BoilerPlate-Blog/frontend/src/components/UserProfile.js": {
+        "description": "JavaScript file defining the UserProfile component, displays user profile information."
+    },
+    "Mern-BoilerPlate-Blog/frontend/public/index.html": {
+        "description": "HTML file, defines the main structure of the web page and includes the React root element."
+    },
+    "Mern-BoilerPlate-Blog/frontend/public/styles.css": {
+        "description": "CSS file, defines the styling of the web page."
+    }
+}
