@@ -1,417 +1,415 @@
 {
-    "/backend/.babelrc": {
+    "backend/.babelrc": {
         "description": "Configuration file for Babel, specifying the presets and plugins used to transpile modern JavaScript to be compatible with older environments."
     },
-    "/backend/.env.sample": {
+    "backend/.env.sample": {
         "description": "Sample environment configuration file. Contains placeholders for environment variables such as database URIs, API keys, and other sensitive information."
     },
-    "/backend/.eslintrc.json": {
+    "backend/.eslintrc.json": {
         "description": "ESLint configuration file, defines the linting rules and settings used to maintain code quality and consistency."
     },
-    "/backend/.prettierignore": {
+    "backend/.prettierignore": {
         "description": "File specifying which files and directories to ignore when running Prettier, the code formatting tool."
     },
-    "/backend/.prettierrc": {
+    "backend/.prettierrc": {
         "description": "Prettier configuration file, defining rules and settings for code formatting."
     },
-    "/backend/app.js": {
+    "backend/app.js": {
         "description": "Main application file. Sets up and configures the Express server, connects to the database, and applies global middleware.",
         "methods": ["initializeServer", "connectDatabase", "applyMiddleware"]
     },
-    "/backend/eslint.config.js": {
+    "backend/eslint.config.js": {
         "description": "JavaScript file for configuring ESLint settings, specifying custom rules and environments for linting."
     },
-    "/backend/package.json": {
+    "backend/package.json": {
         "description": "Backend-specific JSON configuration file defining dependencies, scripts, and metadata for the backend part of the application."
     },
-    "/backend/server.js": {
+    "backend/server.js": {
         "description": "Server entry point. Starts the Express server and listens for incoming connections on the specified port.",
         "methods": ["startServer", "setupRoutes"]
     },
-    "/backend/vercel.json": {
+    "backend/vercel.json": {
         "description": "Configuration file for Vercel deployments. Specifies routes and other deployment settings."
     },
-    "/backend/api/index.js": {
+    "backend/api/index.js": {
         "description": "Entry point for API routes. Imports and sets up all API endpoint handlers.",
         "methods": ["setupApiRoutes"]
     },
-    "/backend/config/db.js": {
+    "backend/config/db.js": {
         "description": "Database configuration file. Manages the connection to the MongoDB database using Mongoose.",
         "methods": ["connectToDatabase"]
     },
-    "/backend/config/passport.js": {
+    "backend/config/passport.js": {
         "description": "Passport.js configuration file. Sets up authentication strategies for user login.",
         "methods": ["initializePassport", "setupStrategies"]
     },
-    "/backend/config/utils.js": {
+    "backend/config/utils.js": {
         "description": "Utility functions for configuration. Includes helper methods for setting up configurations."
     },
-    "/backend/controllers/auth-controller.js": {
+    "backend/controllers/auth-controller.js": {
         "description": "Controller for authentication. Handles user login, registration, and logout functionalities.",
         "methods": ["login", "register", "logout"]
     },
-    "/backend/controllers/posts-controller.js": {
+    "backend/controllers/posts-controller.js": {
         "description": "Controller for blog posts. Manages CRUD operations for posts including creation, retrieval, updating, and deletion.",
         "methods": ["createPost", "getPosts", "updatePost", "deletePost"]
     },
-    "/backend/controllers/user-controller.js": {
+    "backend/controllers/user-controller.js": {
         "description": "Controller for user operations. Handles retrieval and updating of user information.",
         "methods": ["getUser", "updateUser"]
     },
-    "/backend/data/sample_posts.json": {
+    "backend/data/sample_posts.json": {
         "description": "Sample data for blog posts. Used for initial seeding of the database or testing purposes."
     },
-    "/backend/data/script.js": {
+    "backend/data/script.js": {
         "description": "Script for data operations. Can be used to seed the database or perform other data-related tasks."
     },
-    "/backend/middlewares/auth-middleware.js": {
+    "backend/middlewares/auth-middleware.js": {
         "description": "Middleware for authentication. Checks if the user is authenticated before allowing access to protected routes.",
         "methods": ["authenticateUser"]
     },
-    "/backend/middlewares/error-middleware.js": {
+    "backend/middlewares/error-middleware.js": {
         "description": "Middleware for error handling. Catches and handles errors that occur during request processing.",
         "methods": ["handleErrors"]
     },
-    "/backend/middlewares/post-middleware.js": {
+    "backend/middlewares/post-middleware.js": {
         "description": "Middleware for post-related operations. Validates post data before performing CRUD operations.",
         "methods": ["validatePostData"]
     },
-    "/backend/models/post.js": {
+    "backend/models/post.js": {
         "description": "Mongoose model for blog posts. Defines the schema and validation rules for post documents in the MongoDB database.",
         "methods": ["createPostModel"]
     },
-    "/backend/models/user.js": {
+    "backend/models/user.js": {
         "description": "Mongoose model for users. Defines the schema and validation rules for user documents in the MongoDB database.",
         "methods": ["createUserModel"]
     },
-    "/backend/public/.gitkeep": {
+    "backend/public/.gitkeep": {
         "description": "Empty file to ensure the 'public' directory is tracked by Git."
     },
-    "/backend/routes/auth.js": {
+    "backend/routes/auth.js": {
         "description": "Routes for authentication. Defines endpoints for login, registration, and logout.",
         "methods": ["setupAuthRoutes"]
     },
-    "/backend/routes/posts.js": {
+    "backend/routes/posts.js": {
         "description": "Routes for blog posts. Defines endpoints for creating, retrieving, updating, and deleting posts.",
         "methods": ["setupPostRoutes"]
     },
-    "/backend/routes/user.js": {
+    "backend/routes/user.js": {
         "description": "Routes for user operations. Defines endpoints for retrieving and updating user information.",
         "methods": ["setupUserRoutes"]
     },
-    "/backend/services/redis.js": {
+    "backend/services/redis.js": {
         "description": "Service for Redis. Manages Redis connections and provides methods for caching and retrieving data.",
         "methods": ["connectRedis", "cacheData", "retrieveData"]
     },
-    "/backend/tests/teardown.js": {
+    "backend/tests/teardown.js": {
         "description": "Test teardown script. Cleans up and resets the test environment after tests are run.",
         "methods": ["teardownTestEnvironment"]
     },
-    "/backend/tests/integration/controllers/posts-controller.test.js": {
+    "backend/tests/integration/controllers/posts-controller.test.js": {
         "description": "Integration tests for the posts controller. Tests the interaction between the posts controller and other components.",
         "methods": ["testCreatePost", "testGetPosts", "testUpdatePost", "testDeletePost"]
     },
-    "/backend/tests/unit/controllers/posts-controller.test.js": {
+    "backend/tests/unit/controllers/posts-controller.test.js": {
         "description": "Unit tests for the posts controller. Tests individual methods in the posts controller in isolation.",
         "methods": ["testCreatePost", "testGetPosts", "testUpdatePost", "testDeletePost"]
     },
-    "/backend/tests/utils/helper-objects.js": {
+    "backend/tests/utils/helper-objects.js": {
         "description": "Helper objects and functions for tests. Provides reusable data and methods for test cases."
     },
-    "/backend/types/role-type.js": {
+    "backend/types/role-type.js": {
         "description": "Type definitions for user roles. Defines constants and enums for different user roles used in the application."
     },
-    "/backend/utils/api-error.js": {
+    "backend/utils/api-error.js": {
         "description": "Utility for API error handling. Defines custom error classes and methods for generating standardized error responses.",
         "methods": ["ApiError", "handleApiError"]
     },
-    "/backend/utils/api-response.js": {
+    "backend/utils/api-response.js": {
         "description": "Utility for API responses. Provides methods for generating standardized API responses.",
         "methods": ["ApiResponse", "handleApiResponse"]
     },
-    "/backend/utils/async-handler.js": {
+    "backend/utils/async-handler.js": {
         "description": "Utility for handling asynchronous operations. Wraps asynchronous route handlers to catch and handle errors.",
         "methods": ["asyncHandler"]
     },
-    "/backend/utils/cache-posts.js": {
+    "backend/utils/cache-posts.js": {
         "description": "Utility for caching posts. Provides methods to cache and retrieve blog posts using Redis.",
         "methods": ["cachePosts", "getCachedPosts"]
     },
-    "/backend/utils/constants.js": {
+    "backend/utils/constants.js": {
         "description": "Utility for application constants. Defines and exports constants used throughout the application."
     },
-    "/backend/utils/cookie_options.js": {
+    "backend/utils/cookie_options.js": {
         "description": "Utility for cookie options. Provides default settings and options for setting cookies."
     },
-    "/backend/utils/middleware.js": {
+    "backend/utils/middleware.js": {
         "description": "Utility for middleware. Provides helper methods for setting up and using middleware in the application."
     },
- 
-    "/frontend/.babelrc": {
+    "frontend/.babelrc": {
         "description": "Configuration file for Babel, specifying the presets and plugins used to transpile modern JavaScript to be compatible with older environments."
     },
-    "/frontend/.env": {
+    "frontend/.env": {
         "description": "Environment configuration file containing environment variables such as API keys and other sensitive information."
     },
-    "/frontend/.eslintrc.cjs": {
+    "frontend/.eslintrc.cjs": {
         "description": "ESLint configuration file in CommonJS format, defines the linting rules and settings used to maintain code quality and consistency."
     },
-    "/frontend/.prettierignore": {
+    "frontend/.prettierignore": {
         "description": "File specifying which files and directories to ignore when running Prettier, the code formatting tool."
     },
-    "/frontend/.prettierrc": {
+    "frontend/.prettierrc": {
         "description": "Prettier configuration file, defining rules and settings for code formatting."
     },
-    "/frontend/README.md": {
+    "frontend/README.md": {
         "description": "Markdown file providing comprehensive project documentation, setup instructions, usage guidelines, and contribution instructions."
     },
-    "/frontend/components.json": {
+    "frontend/components.json": {
         "description": "Configuration file listing all the components used in the frontend application."
     },
-    "/frontend/eslint.config.js": {
+    "frontend/eslint.config.js": {
         "description": "JavaScript file for configuring ESLint settings, specifying custom rules and environments for linting."
     },
-    "/frontend/index.html": {
+    "frontend/index.html": {
         "description": "Main HTML file for the frontend application, serving as the entry point for the React application."
     },
-    "/frontend/jest.config.ts": {
+    "frontend/jest.config.ts": {
         "description": "TypeScript configuration file for Jest, specifying settings and options for running tests."
     },
-    "/frontend/package.json": {
+    "frontend/package.json": {
         "description": "Frontend-specific JSON configuration file defining dependencies, scripts, and metadata for the frontend part of the application."
     },
-    "/frontend/postcss.config.js": {
+    "frontend/postcss.config.js": {
         "description": "Configuration file for PostCSS, specifying plugins and settings for processing CSS."
     },
-    "/frontend/tailwind.config.js": {
+    "frontend/tailwind.config.js": {
         "description": "Configuration file for Tailwind CSS, defining custom themes, variants, and plugins."
     },
-    "/frontend/test-setup.ts": {
+    "frontend/test-setup.ts": {
         "description": "Test setup file configuring the testing environment, including setup for libraries like Jest and Enzyme."
     },
-    "/frontend/tsconfig.json": {
+    "frontend/tsconfig.json": {
         "description": "TypeScript configuration file specifying compiler options and settings for the frontend application."
     },
-    "/frontend/tsconfig.node.json": {
+    "frontend/tsconfig.node.json": {
         "description": "TypeScript configuration file specifying compiler options and settings for Node.js related scripts in the frontend application."
     },
-    "/frontend/tsconfig.prod.json": {
+    "frontend/tsconfig.prod.json": {
         "description": "TypeScript configuration file specifying compiler options and settings for production builds of the frontend application."
     },
-    "/frontend/vercel.json": {
+    "frontend/vercel.json": {
         "description": "Configuration file for Vercel deployments. Specifies routes and other deployment settings."
     },
-    "/frontend/vite.config.ts": {
+    "frontend/vite.config.ts": {
         "description": "Configuration file for Vite, specifying settings and plugins for building and bundling the frontend application."
     },
-    "/frontend/public/vite.svg": {
+    "frontend/public/vite.svg": {
         "description": "SVG file used in the public directory of the frontend application, typically for branding or visual elements."
     },
-    "/frontend/src/App.tsx": {
+    "frontend/src/App.tsx": {
         "description": "Main React component file serving as the root component for the frontend application. Contains global state and routes.",
         "methods": ["App"]
     },
-    "/frontend/src/index.css": {
+    "frontend/src/index.css": {
         "description": "CSS file providing global styles for the frontend application."
     },
-    "/frontend/src/main.tsx": {
+    "frontend/src/main.tsx": {
         "description": "Main TypeScript file for the frontend application. Renders the root React component into the DOM.",
         "methods": ["main"]
     },
-    "/frontend/src/vite-env.d.ts": {
+    "frontend/src/vite-env.d.ts": {
         "description": "TypeScript declaration file for Vite, providing type definitions for Vite-specific features."
     },
-    "/frontend/src/__tests__/App.test.tsx": {
+    "frontend/src/__tests__/App.test.tsx": {
         "description": "Test file for the main App component. Contains unit tests to ensure the component renders and functions correctly.",
         "methods": ["testAppRendering"]
     },
-    "/frontend/src/__tests__/integration-test/home.test.tsx": {
+    "frontend/src/__tests__/integration-test/home.test.tsx": {
         "description": "Integration test file for the home page. Tests the interaction between components on the home page.",
         "methods": ["testHomePage"]
     },
-    "/frontend/src/__tests__/integration-test/signin/client-utils.tsx": {
+    "frontend/src/__tests__/integration-test/signin/client-utils.tsx": {
         "description": "Utility file for sign-in integration tests. Provides helper functions for testing the sign-in flow.",
         "methods": ["setupSignInTest"]
     },
-    "/frontend/src/__tests__/integration-test/signin/signin.test.tsx": {
+    "frontend/src/__tests__/integration-test/signin/signin.test.tsx": {
         "description": "Integration test file for the sign-in page. Tests the sign-in functionality and form validation.",
         "methods": ["testSignIn"]
     },
-    "/frontend/src/__tests__/mocks/handeler-mock.ts": {
+    "frontend/src/__tests__/mocks/handeler-mock.ts": {
         "description": "Mock file for handling API requests in tests. Provides mock implementations for API calls.",
         "methods": ["mockApiHandler"]
     },
-    "/frontend/src/__tests__/mocks/node-mock.ts": {
+    "frontend/src/__tests__/mocks/node-mock.ts": {
         "description": "Mock file for Node.js modules in tests. Provides mock implementations for Node.js-specific features.",
         "methods": ["mockNodeModules"]
     },
-    "/frontend/src/__tests__/unit-test/signup/client-utils.tsx": {
+    "frontend/src/__tests__/unit-test/signup/client-utils.tsx": {
         "description": "Utility file for sign-up unit tests. Provides helper functions for testing the sign-up flow.",
         "methods": ["setupSignUpTest"]
     },
-    "/frontend/src/__tests__/unit-test/signup/signup.test.tsx": {
+    "frontend/src/__tests__/unit-test/signup/signup.test.tsx": {
         "description": "Unit test file for the sign-up page. Tests individual functions and components in the sign-up flow.",
         "methods": ["testSignUp"]
     },
-    "/frontend/src/assets/wanderlustbg.webp": {
+    "frontend/src/assets/wanderlustbg.webp": {
         "description": "WebP image file used as a background in the frontend application."
     },
-    "/frontend/src/assets/svg/add-icon-white.svg": {
+    "frontend/src/assets/svg/add-icon-white.svg": {
         "description": "SVG file for the add icon in white color, used in the frontend application for visual elements."
     },
-    "/frontend/src/assets/svg/app-icon.svg": {
+    "frontend/src/assets/svg/app-icon.svg": {
         "description": "SVG file for the application icon, used in the frontend application for branding and visual elements."
     },
-    "/frontend/src/components/header.tsx": {
+    "frontend/src/components/header.tsx": {
         "description": "React component file for the header. Contains navigation elements and branding for the application.",
         "methods": ["Header"]
     },
-    "/frontend/src/components/footer.tsx": {
+    "frontend/src/components/footer.tsx": {
         "description": "React component file for the footer. Contains footer content and links.",
         "methods": ["Footer"]
     },
-    "/frontend/src/components/sidebar.tsx": {
+    "frontend/src/components/sidebar.tsx": {
         "description": "React component file for the sidebar. Provides navigation options and quick links.",
         "methods": ["Sidebar"]
     },
-    "/frontend/src/components/post-card.tsx": {
+    "frontend/src/components/post-card.tsx": {
         "description": "React component file for displaying individual blog post cards. Shows post summary and metadata.",
         "methods": ["PostCard"]
     },
-    "/frontend/src/components/create-post-form.tsx": {
+    "frontend/src/components/create-post-form.tsx": {
         "description": "React component file for the create post form. Provides a form for users to submit new blog posts.",
         "methods": ["CreatePostForm"]
     },
-    "/frontend/src/components/comment-section.tsx": {
+    "frontend/src/components/comment-section.tsx": {
         "description": "React component file for the comment section. Displays comments and allows users to add new comments.",
         "methods": ["CommentSection"]
     },
-    "/frontend/src/components/skeletons/latest-post-card-skeleton.tsx": {
+    "frontend/src/components/skeletons/latest-post-card-skeleton.tsx": {
         "description": "React component file for the latest post card skeleton. Displays a loading skeleton for blog post cards.",
         "methods": ["LatestPostCardSkeleton"]
     },
-    "/frontend/src/components/skeletons/loader.tsx": {
+    "frontend/src/components/skeletons/loader.tsx": {
         "description": "React component file for a loader. Displays a loading spinner or progress indicator.",
         "methods": ["Loader"]
     },
-    "/frontend/src/components/skeletons/post-card-skeleton.tsx": {
+    "frontend/src/components/skeletons/post-card-skeleton.tsx": {
         "description": "React component file for the post card skeleton. Displays a loading skeleton for blog post cards.",
         "methods": ["PostCardSkeleton"]
     },
-    "/frontend/src/components/skeletons/related-post-card-skeleton.tsx": {
+    "frontend/src/components/skeletons/related-post-card-skeleton.tsx": {
         "description": "React component file for the related post card skeleton. Displays a loading skeleton for related blog post cards.",
         "methods": ["RelatedPostCardSkeleton"]
     },
-    "/frontend/src/components/ui/skeleton.tsx": {
+    "frontend/src/components/ui/skeleton.tsx": {
         "description": "React component file for generic skeleton elements. Provides reusable skeleton components for loading states.",
         "methods": ["Skeleton"]
     },
-    "/frontend/src/config/jest/file-mock.ts": {
+    "frontend/src/config/jest/file-mock.ts": {
         "description": "Configuration file for mocking file imports in Jest tests. Provides mock implementations for file imports.",
         "methods": ["fileMock"]
     },
-    "/frontend/src/config/jest/setup-tests.ts": {
+    "frontend/src/config/jest/setup-tests.ts": {
         "description": "Setup file for Jest tests. Configures the testing environment and sets up necessary mocks.",
         "methods": ["setupTests"]
     },
-    "/frontend/src/config/jest/style-mock.ts": {
+    "frontend/src/config/jest/style-mock.ts": {
         "description": "Configuration file for mocking style imports in Jest tests. Provides mock implementations for style imports.",
         "methods": ["styleMock"]
     },
-    "/frontend/src/constants/images.ts": {
+    "frontend/src/constants/images.ts": {
         "description": "File defining image constants used throughout the frontend application. Provides URLs and paths for images."
     },
-    "/frontend/src/helpers/axios-instance.ts": {
+    "frontend/src/helpers/axios-instance.ts": {
         "description": "Helper file for creating an Axios instance. Configures default settings and interceptors for API requests.",
         "methods": ["createAxiosInstance"]
     },
-    "/frontend/src/hooks/useAuthData.ts": {
+    "frontend/src/hooks/useAuthData.ts": {
         "description": "Custom React hook for managing authentication data. Provides methods for getting and setting auth data.",
         "methods": ["useAuthData"]
     },
-    "/frontend/src/layouts/footer-layout.tsx": {
+    "frontend/src/layouts/footer-layout.tsx": {
         "description": "React component file for the footer layout. Defines the structure and content of the footer section.",
         "methods": ["FooterLayout"]
     },
-    "/frontend/src/layouts/header-layout.tsx": {
+    "frontend/src/layouts/header-layout.tsx": {
         "description": "React component file for the header layout. Defines the structure and content of the header section.",
         "methods": ["HeaderLayout"]
     },
-    "/frontend/src/lib/types.ts": {
+    "frontend/src/lib/types.ts": {
         "description": "TypeScript file defining various types and interfaces used throughout the frontend application.",
         "methods": ["defineTypes"]
     },
-    "/frontend/src/lib/utils.ts": {
+    "frontend/src/lib/utils.ts": {
         "description": "Utility file containing helper functions and methods used across the frontend application.",
         "methods": ["utilityFunctions"]
     },
-    "/frontend/src/pages/add-blog.tsx": {
+    "frontend/src/pages/add-blog.tsx": {
         "description": "React component file for the add blog page. Provides a form for users to create and submit a new blog post.",
         "methods": ["AddBlog"]
     },
-    "/frontend/src/pages/admin-blogs.tsx": {
+    "frontend/src/pages/admin-blogs.tsx": {
         "description": "React component file for the admin blogs page. Allows admin users to manage and edit blog posts.",
         "methods": ["AdminBlogs"]
     },
-    "/frontend/src/pages/admin-users.tsx": {
+    "frontend/src/pages/admin-users.tsx": {
         "description": "React component file for the admin users page. Allows admin users to manage and edit user accounts.",
         "methods": ["AdminUsers"]
     },
-    "/frontend/src/pages/details-page.tsx": {
+    "frontend/src/pages/details-page.tsx": {
         "description": "React component file for the details page. Displays detailed information about a specific blog post.",
         "methods": ["DetailsPage"]
     },
-    "/frontend/src/pages/edit-blog.tsx": {
+    "frontend/src/pages/edit-blog.tsx": {
         "description": "React component file for the edit blog page. Provides a form for users to edit an existing blog post.",
         "methods": ["EditBlog"]
     },
-    "/frontend/src/pages/home-page.tsx": {
+    "frontend/src/pages/home-page.tsx": {
         "description": "React component file for the home page. Displays the main content and featured blog posts.",
         "methods": ["HomePage"]
     },
-    "/frontend/src/pages/not-found.tsx": {
+    "frontend/src/pages/not-found.tsx": {
         "description": "React component file for the not found page. Displays a 404 error message for unknown routes.",
         "methods": ["NotFound"]
     },
-    "/frontend/src/pages/signin-page.tsx": {
+    "frontend/src/pages/signin-page.tsx": {
         "description": "React component file for the sign-in page. Provides a form for users to authenticate and access their account.",
         "methods": ["SigninPage"]
     },
-    "/frontend/src/pages/signup-page.tsx": {
+    "frontend/src/pages/signup-page.tsx": {
         "description": "React component file for the sign-up page. Provides a form for new users to create an account.",
         "methods": ["SignupPage"]
     },
-    "/frontend/src/types/post-type.tsx": {
+    "frontend/src/types/post-type.tsx": {
         "description": "TypeScript file defining the post type. Specifies the structure and types for blog post data.",
         "methods": ["PostType"]
     },
-    "/frontend/src/types/role-type.tsx": {
+    "frontend/src/types/role-type.tsx": {
         "description": "TypeScript file defining the role type. Specifies the structure and types for user roles.",
         "methods": ["RoleType"]
     },
-    "/frontend/src/types/test-props.ts": {
+    "frontend/src/types/test-props.ts": {
         "description": "TypeScript file defining test properties. Specifies the structure and types for test data used in unit and integration tests.",
         "methods": ["TestProps"]
     },
-    "/frontend/src/utils/category-colors.ts": {
+    "frontend/src/utils/category-colors.ts": {
         "description": "Utility file defining color codes for different blog post categories.",
         "methods": ["CategoryColors"]
     },
-    "/frontend/src/utils/format-post-time.tsx": {
+    "frontend/src/utils/format-post-time.tsx": {
         "description": "Utility file for formatting post timestamps. Provides methods for displaying post times in a user-friendly format.",
         "methods": ["FormatPostTime"]
     },
-    "/frontend/src/utils/slug-generator.ts": {
+    "frontend/src/utils/slug-generator.ts": {
         "description": "Utility file for generating slugs from post titles. Provides methods for creating URL-friendly slugs.",
         "methods": ["SlugGenerator"]
     },
-    "/frontend/src/utils/theme-changer.ts": {
+    "frontend/src/utils/theme-changer.ts": {
         "description": "Utility file for changing the application theme. Provides methods for toggling between light and dark themes.",
         "methods": ["ThemeChanger"]
     },
-    "/frontend/src/utils/user-state.ts": {
+    "frontend/src/utils/user-state.ts": {
         "description": "Utility file for managing user state. Provides methods for getting and setting user-related data in local storage.",
         "methods": ["UserState"]
     }
 }
-    
