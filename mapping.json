@@ -1,1204 +1,1180 @@
 {
-    "backend/api/index.js": {
-        "description": "Exports functionality: export default app;.",
-        "imports": [
-            "import app from '../app.js';"
-        ],
-        "methods/functions": [
-            "default"
-        ]
-    },
-    "backend/app.js": {
-        "description": "Main application file setting up Express server and routing. Sets up middleware or routes: app.use(. Sets up middleware or routes: app.use(express.json());. Sets up middleware or routes: app.use(express.urlencoded({ extended: true }));. Sets up middleware or routes: app.use(cookieParser());. Sets up middleware or routes: app.use(compression());. Sets up middleware or routes: app.use(session({ secret: 'secret', resave: false, saveUninitialized: false }));. Sets up middleware or routes: app.use(passport.initialize());. Sets up middleware or routes: app.use(passport.session());. Sets up middleware or routes: app.use('/api/posts', postsRouter);. Sets up middleware or routes: app.use('/api/auth', authRouter);. Sets up middleware or routes: app.use('/api/user', userRouter);. Sets up middleware or routes: app.use(errorMiddleware);. Exports functionality: export default app;.",
-        "imports": [
-            "import compression from 'compression';",
-            "import cookieParser from 'cookie-parser';",
-            "import cors from 'cors';",
-            "import express from 'express';",
-            "import { FRONTEND_URL } from './config/utils.js';",
-            "import authRouter from './routes/auth.js';",
-            "import postsRouter from './routes/posts.js';",
-            "import userRouter from './routes/user.js';",
-            "import errorMiddleware from './middlewares/error-middleware.js';",
-            "import passport from './config/passport.js';",
-            "import session from 'express-session';"
-        ],
-        "methods/functions": [
-            "default"
-        ]
-    },
-    "backend/config/db.js": {
-        "description": "Configuration file for connecting to MongoDB using Mongoose.",
-        "imports": [
-            "import mongoose from 'mongoose';"
-        ],
-        "methods/functions": [
-            "default"
-        ]
-    },
-    "backend/config/passport.js": {
-        "description": "Configuration file setting up Passport.js for user authentication.",
-        "imports": [
-            "import passport from 'passport';",
-            "import LocalStrategy from 'passport-local';",
-            "import User from '../models/user.js';"
-        ],
-        "methods/functions": [
-            "passport.use"
-        ]
-    },
-    "backend/config/utils.js": {
-        "description": "Utility functions and constants used across the application.",
-        "imports": [
-            "import path from 'path';",
-            "import dotenv from 'dotenv';"
-        ],
-        "methods/functions": [
-            "No methods/functions found."
-        ]
-    },
-    "backend/controllers/auth-controller.js": {
-        "description": "Controller handling user authentication, including sign up, sign in, and sign out.",
-        "imports": [
-            "import passport from 'passport';",
-            "import { validationResult } from 'express-validator';",
-            "import User from '../models/user.js';",
-            "import { signAccessToken, signRefreshToken } from '../utils/jwt.js';"
-        ],
-        "methods/functions": []
-    },
-    "backend/controllers/posts-controller.js": {
-        "description": "Controller handling CRUD operations for blog posts, including validation and cache management.",
-        "imports": [
-            "import Post from '../models/post.js';",
-            "import User from '../models/user.js';",
-            "import { deleteDataFromCache, storeDataInCache } from '../utils/cache-posts.js';",
-            "import { HTTP_STATUS, REDIS_KEYS, RESPONSE_MESSAGES, validCategories } from '../utils/constants.js';"
-        ],
-        "methods/functions": []
-    },
-    "backend/controllers/user-controller.js": {
-        "description": "Controller handling user management, including retrieving, updating, and deleting user data.",
-        "imports": [
-            "import { HTTP_STATUS, RESPONSE_MESSAGES } from '../utils/constants.js';",
-            "import User from '../models/user.js';",
-            "import { Role } from '../types/role-type.js';"
-        ],
-        "methods/functions": []
-    },
-    {
-    "backend/data/sample_posts.json": {
-        "description": "A JSON file containing sample blog post data used for testing or seeding the database.",
-        "imports": [
-            "No imports found."
-        ],
-        "methods/functions": [
-            "No methods/functions found."
-        ]
-    },
-    "backend/data/script.js": {
-        "description": "A script to seed the MongoDB database with sample posts. It connects to the database, reads data from JSON files, and inserts it into the relevant collections.",
-        "imports": [
-            "import mongoose from 'mongoose';",
-            "import fs from 'fs';",
-            "import path from 'path';",
-            "import { fileURLToPath } from 'url';",
-            "import Post from '../models/post.js'; // Adjust the path to your Post model",
-            "import dotenv from 'dotenv';"
-        ],
-        "methods/functions": [
-            "No methods/functions found."
-        ]
-    },
-    "backend/eslint.config.js": {
-        "description": "Configuration file for ESLint, which sets up linting rules and environments for the project.",
-        "imports": [
-            "import globals from 'globals';",
-            "import pluginJs from '@eslint/js';"
-        ],
-        "methods/functions": [
-            "default"
-        ]
-    },
-    "backend/middlewares/auth-middleware.js": {
-        "description": "Middleware for handling authentication and authorization logic, including verifying JWT tokens and checking user roles.",
-        "imports": [
-            "import { JWT_SECRET } from '../config/utils.js';",
-            "import { ApiError } from '../utils/api-error.js';",
-            "import { HTTP_STATUS, RESPONSE_MESSAGES } from '../utils/constants.js';",
-            "import jwt from 'jsonwebtoken';",
-            "import { Role } from '../types/role-type.js';",
-            "import User from '../models/user.js';"
-        ],
-        "methods/functions": []
-    },
-    "backend/middlewares/error-middleware.js": {
-        "description": "Middleware for handling errors and sending standardized error responses.",
-        "imports": [
-            "import { HTTP_STATUS, RESPONSE_MESSAGES } from '../utils/constants.js';"
-        ],
-        "methods/functions": [
-            "default"
-        ]
-    },
-    "backend/middlewares/post-middleware.js": {
-        "description": "Middleware for handling blog post-related authorization, such as verifying if the user is the author of a post.",
-        "imports": [
-            "import Post from '../models/post.js';",
-            "import { HTTP_STATUS, RESPONSE_MESSAGES } from '../utils/constants.js';"
-        ],
-        "methods/functions": []
-    },
-    "backend/models/post.js": {
-        "description": "Mongoose model for the blog post schema, defining the structure of post documents in the MongoDB database.",
-        "imports": [
-            "import { Schema, model } from 'mongoose';"
-        ],
-        "methods/functions": [
-            "default"
-        ]
-    },
-    "backend/models/user.js": {
-        "description": "Mongoose model for the user schema, handling user data, password hashing, and JWT token generation.",
-        "imports": [
-            "import { Schema, model } from 'mongoose';",
-            "import JWT from 'jsonwebtoken';",
-            "import bcrypt from 'bcryptjs';",
-            "import crypto from 'crypto';",
-            "import { ACCESS_TOKEN_EXPIRES_IN, JWT_SECRET, REFRESH_TOKEN_EXPIRES_IN } from '../config/utils.js';",
-            "import { Role } from '../types/role-type.js';"
-        ],
-        "methods/functions": []
-    },
-    
-    "backend/package.json": {
-
+  "backend/api/index.js": {
+    "description": "Exports functionality: export default app;.",
+    "imports": [
+      "import app from '../app.js';"
+    ],
+    "methods/functions": [
+      "default"
+    ]
+  },
+  "backend/app.js": {
+    "description": "Main application file setting up Express server and routing. Sets up middleware or routes: app.use(. Sets up middleware or routes: app.use(express.json());. Sets up middleware or routes: app.use(express.urlencoded({ extended: true }));. Sets up middleware or routes: app.use(cookieParser());. Sets up middleware or routes: app.use(compression());. Sets up middleware or routes: app.use(session({ secret: 'secret', resave: false, saveUninitialized: false }));. Sets up middleware or routes: app.use(passport.initialize());. Sets up middleware or routes: app.use(passport.session());. Sets up middleware or routes: app.use('/api/posts', postsRouter);. Sets up middleware or routes: app.use('/api/auth', authRouter);. Sets up middleware or routes: app.use('/api/user', userRouter);. Sets up middleware or routes: app.use(errorMiddleware);. Exports functionality: export default app;.",
+    "imports": [
+      "import compression from 'compression';",
+      "import cookieParser from 'cookie-parser';",
+      "import cors from 'cors';",
+      "import express from 'express';",
+      "import { FRONTEND_URL } from './config/utils.js';",
+      "import authRouter from './routes/auth.js';",
+      "import postsRouter from './routes/posts.js';",
+      "import userRouter from './routes/user.js';",
+      "import errorMiddleware from './middlewares/error-middleware.js';",
+      "import passport from './config/passport.js';",
+      "import session from 'express-session';"
+    ],
+    "methods/functions": [
+      "default"
+    ]
+  },
+  "backend/config/db.js": {
+    "description": "Configuration file for connecting to MongoDB using Mongoose.",
+    "imports": [
+      "import mongoose from 'mongoose';"
+    ],
+    "methods/functions": [
+      "default"
+    ]
+  },
+  "backend/config/passport.js": {
+    "description": "Configuration file setting up Passport.js for user authentication.",
+    "imports": [
+      "import passport from 'passport';",
+      "import LocalStrategy from 'passport-local';",
+      "import User from '../models/user.js';"
+    ],
+    "methods/functions": [
+      "passport.use"
+    ]
+  },
+  "backend/config/utils.js": {
+    "description": "Utility functions and constants used across the application.",
+    "imports": [
+      "import path from 'path';",
+      "import dotenv from 'dotenv';"
+    ],
+    "methods/functions": [
+      "No methods/functions found."
+    ]
+  },
+  "backend/controllers/auth-controller.js": {
+    "description": "Controller handling user authentication, including sign up, sign in, and sign out.",
+    "imports": [
+      "import passport from 'passport';",
+      "import { validationResult } from 'express-validator';",
+      "import User from '../models/user.js';",
+      "import { signAccessToken, signRefreshToken } from '../utils/jwt.js';"
+    ],
+    "methods/functions": []
+  },
+  "backend/controllers/posts-controller.js": {
+    "description": "Controller handling CRUD operations for blog posts, including validation and cache management.",
+    "imports": [
+      "import Post from '../models/post.js';",
+      "import User from '../models/user.js';",
+      "import { deleteDataFromCache, storeDataInCache } from '../utils/cache-posts.js';",
+      "import { HTTP_STATUS, REDIS_KEYS, RESPONSE_MESSAGES, validCategories } from '../utils/constants.js';"
+    ],
+    "methods/functions": []
+  },
+  "backend/controllers/user-controller.js": {
+    "description": "Controller handling user management, including retrieving, updating, and deleting user data.",
+    "imports": [
+      "import { HTTP_STATUS, RESPONSE_MESSAGES } from '../utils/constants.js';",
+      "import User from '../models/user.js';",
+      "import { Role } from '../types/role-type.js';"
+    ],
+    "methods/functions": []
+  },
+  "backend/data/sample_posts.json": {
+    "description": "A JSON file containing sample blog post data used for testing or seeding the database.",
+    "imports": [
+      "No imports found."
+    ],
+    "methods/functions": [
+      "No methods/functions found."
+    ]
+  },
+  "backend/data/script.js": {
+    "description": "A script to seed the MongoDB database with sample posts. It connects to the database, reads data from JSON files, and inserts it into the relevant collections.",
+    "imports": [
+      "import mongoose from 'mongoose';",
+      "import fs from 'fs';",
+      "import path from 'path';",
+      "import { fileURLToPath } from 'url';",
+      "import Post from '../models/post.js'; // Adjust the path to your Post model",
+      "import dotenv from 'dotenv';"
+    ],
+    "methods/functions": [
+      "No methods/functions found."
+    ]
+  },
+  "backend/eslint.config.js": {
+    "description": "Configuration file for ESLint, which sets up linting rules and environments for the project.",
+    "imports": [
+      "import globals from 'globals';",
+      "import pluginJs from '@eslint/js';"
+    ],
+    "methods/functions": [
+      "default"
+    ]
+  },
+  "backend/middlewares/auth-middleware.js": {
+    "description": "Middleware for handling authentication and authorization logic, including verifying JWT tokens and checking user roles.",
+    "imports": [
+      "import { JWT_SECRET } from '../config/utils.js';",
+      "import { ApiError } from '../utils/api-error.js';",
+      "import { HTTP_STATUS, RESPONSE_MESSAGES } from '../utils/constants.js';",
+      "import jwt from 'jsonwebtoken';",
+      "import { Role } from '../types/role-type.js';",
+      "import User from '../models/user.js';"
+    ],
+    "methods/functions": []
+  },
+  "backend/middlewares/error-middleware.js": {
+    "description": "Middleware for handling errors and sending standardized error responses.",
+    "imports": [
+      "import { HTTP_STATUS, RESPONSE_MESSAGES } from '../utils/constants.js';"
+    ],
+    "methods/functions": [
+      "default"
+    ]
+  },
+  "backend/middlewares/post-middleware.js": {
+    "description": "Middleware for handling blog post-related authorization, such as verifying if the user is the author of a post.",
+    "imports": [
+      "import Post from '../models/post.js';",
+      "import { HTTP_STATUS, RESPONSE_MESSAGES } from '../utils/constants.js';"
+    ],
+    "methods/functions": []
+  },
+  "backend/models/post.js": {
+    "description": "Mongoose model for the blog post schema, defining the structure of post documents in the MongoDB database.",
+    "imports": [
+      "import { Schema, model } from 'mongoose';"
+    ],
+    "methods/functions": [
+      "default"
+    ]
+  },
+  "backend/models/user.js": {
+    "description": "Mongoose model for the user schema, handling user data, password hashing, and JWT token generation.",
+    "imports": [
+      "import { Schema, model } from 'mongoose';",
+      "import JWT from 'jsonwebtoken';",
+      "import bcrypt from 'bcryptjs';",
+      "import crypto from 'crypto';",
+      "import { ACCESS_TOKEN_EXPIRES_IN, JWT_SECRET, REFRESH_TOKEN_EXPIRES_IN } from '../config/utils.js';",
+      "import { Role } from '../types/role-type.js';"
+    ],
+    "methods/functions": []
+  },
+  "backend/package.json": {
     "description": "Configuration file for managing project dependencies, scripts, and metadata for the Node.js application.",
     "dependencies": {
-        "axios": "^1.6.8",
-        "bcryptjs": "^2.4.3",
-        "compression": "^1.7.4",
-        "cookie-parser": "^1.4.6",
-        "cors": "^2.8.5",
-        "dotenv": "^16.3.1",
-        "express": "^4.18.2",
-        "express-session": "^1.18.0",
-        "fs": "^0.0.1-security",
-        "jsonwebtoken": "^9.0.2",
-        "mongoose": "^8.5.2",
-        "nodemon": "^3.0.1",
-        "passport": "^0.7.0",
-        "passport-google-oauth20": "^2.0.0",
-        "redis": "^4.6.13"
+      "axios": "^1.6.8",
+      "bcryptjs": "^2.4.3",
+      "compression": "^1.7.4",
+      "cookie-parser": "^1.4.6",
+      "cors": "^2.8.5",
+      "dotenv": "^16.3.1",
+      "express": "^4.18.2",
+      "express-session": "^1.18.0",
+      "fs": "^0.0.1-security",
+      "jsonwebtoken": "^9.0.2",
+      "mongoose": "^8.5.2",
+      "nodemon": "^3.0.1",
+      "passport": "^0.7.0",
+      "passport-google-oauth20": "^2.0.0",
+      "redis": "^4.6.13"
     },
     "devDependencies": {
-        "@babel/preset-env": "^7.23.2",
-        "@stylistic/eslint-plugin-js": "^2.1.0",
-        "babel-jest": "^29.7.0",
-        "eslint": "^9.3.0",
-        "eslint-config-prettier": "^9.1.0",
-        "eslint-plugin-babel": "^5.3.1",
-        "eslint-plugin-prettier": "^5.1.3",
-        "globals": "^15.3.0",
-        "jest": "^29.7.0",
-        "lint-staged": "^15.2.2",
-        "prettier": "^3.2.5",
-        "supertest": "^6.3.3"
+      "@babel/preset-env": "^7.23.2",
+      "@stylistic/eslint-plugin-js": "^2.1.0",
+      "babel-jest": "^29.7.0",
+      "eslint": "^9.3.0",
+      "eslint-config-prettier": "^9.1.0",
+      "eslint-plugin-babel": "^5.3.1",
+      "eslint-plugin-prettier": "^5.1.3",
+      "globals": "^15.3.0",
+      "jest": "^29.7.0",
+      "lint-staged": "^15.2.2",
+      "prettier": "^3.2.5",
+      "supertest": "^6.3.3"
     },
     "scripts": {
-        "test": "jest --watchAll  --detectOpenHandles --verbose --coverage ",
-        "start": "node server.js",
-        "dev": "nodemon server.js",
-        "check": "prettier --check .",
-        "format": "prettier --write .",
-        "vercel-build": "echo yay"
+      "test": "jest --watchAll  --detectOpenHandles --verbose --coverage ",
+      "start": "node server.js",
+      "dev": "nodemon server.js",
+      "check": "prettier --check .",
+      "format": "prettier --write .",
+      "vercel-build": "echo yay"
     },
     "version": "No version specified."
-    },
-    "backend/routes/auth.js": {
-        "description": "Router handling user authentication routes, including login, registration, and logout.",
-        "imports": [
-            "import { Router } from 'express';",
-            "import { authMiddleware } from '../middlewares/auth-middleware.js';",
-            "import passport from '../config/passport.js';",
-            "import jwt from 'jsonwebtoken';"
-        ],
-        "methods/functions": [
-            "default"
-        ]
-    },
-    "backend/routes/posts.js": {
-        "description": "Router handling blog post-related routes, including creation, retrieval, and deletion of posts.",
-        "imports": [
-            "import { Router } from 'express';",
-            "import { REDIS_KEYS } from '../utils/constants.js';",
-            "import { cacheHandler } from '../utils/middleware.js';",
-            "import { isAdminMiddleware, authMiddleware } from '../middlewares/auth-middleware.js';",
-            "import { isAuthorMiddleware } from '../middlewares/post-middleware.js';"
-        ],
-        "methods/functions": [
-            "default"
-        ]
-    },
-    "backend/routes/user.js": {
-        "description": "Router handling user-related routes, including retrieving and updating user profiles.",
-        "imports": [
-            "import { Router } from 'express';",
-            "import { isAdminMiddleware, authMiddleware } from '../middlewares/auth-middleware.js';"
-        ],
-        "methods/functions": [
-            "default"
-        ]
-    },
-    "backend/server.js": {
-        "description": "The main entry point for the Node.js application, setting up the server and connecting to the database.",
-        "imports": [
-            "import app from './app.js';",
-            "import connectDB from './config/db.js';",
-            "import { PORT } from './config/utils.js';"
-        ],
-        "methods/functions": [
-            "No methods/functions found."
-        ]
-    },
-    "backend/services/redis.js": {
-        "description": "Service file for connecting to and managing Redis, used for caching and other purposes.",
-        "imports": [
-            "import redis from 'redis';",
-            "import { promisify } from 'util';",
-            "import { REDIS_URL } from '../config/utils.js';"
-        ],
-        "methods/functions": [
-            "default"
-        ]
-    },
-    "backend/tests/integration/controllers/posts-controller.test.js": {
-        "description": "Integration test for the posts controller, ensuring that the API works as expected when interacting with other components.",
-        "imports": [
-            "import request from 'supertest';",
-            "import Post from '../../../models/post.js';",
-            "import server from '../../../server.js';",
-            "import { validCategories, HTTP_STATUS, RESPONSE_MESSAGES } from '../../../utils/constants.js';",
-            "import { createPostObject } from '../../utils/helper-objects.js';",
-            "import { expect, jest, it, afterAll, describe } from '@jest/globals';"
-        ],
-        "methods/functions": [
-            "No methods/functions found."
-        ]
-    },
-    "backend/tests/teardown.js": {
-        "description": "Script to tear down the test environment, cleaning up any remaining data or processes.",
-        "imports": [
-            "No imports found."
-        ],
-        "methods/functions": [
-            "default"
-        ]
-    },
-    "backend/tests/unit/controllers/posts-controller.test.js": {
-        "description": "Unit test for the posts controller, testing individual functions and logic in isolation.",
-        "imports": [
-            "import Post from '../../../models/post.js';",
-            "import { expect, jest, it, describe } from '@jest/globals';",
-            "import { validCategories, HTTP_STATUS, RESPONSE_MESSAGES } from '../../../utils/constants.js';",
-            "import { createPostObject, createRequestObject, res } from '../../utils/helper-objects.js';"
-        ],
-        "methods/functions": [
-            "No methods/functions found."
-        ]
-    },
-    "backend/tests/utils/helper-objects.js": {
-        "description": "Utility file providing mock objects and helper functions for testing purposes.",
-        "imports": [
-            "import { validCategories } from '../../utils/constants';",
-            "import { jest } from '@jest/globals';"
-        ],
-        "methods/functions": []
-    },
-    {
-    "backend/types/role-type.js": {
-        "description": "Defines and exports role types used throughout the application.",
-        "imports": [
-            "No imports found."
-        ],
-        "methods/functions": [
-            "const"
-        ]
-    },
-    "backend/utils/api-error.js": {
-        "description": "Defines and exports a custom API error class used for standardized error handling.",
-        "imports": [
-            "import { RESPONSE_MESSAGES } from './constants.js';"
-        ],
-        "methods/functions": []
-    },
-    "backend/utils/api-response.js": {
-        "description": "Defines and exports a custom API response class for consistent API responses.",
-        "imports": [
-            "import { HTTP_STATUS } from './constants.js';"
-        ],
-        "methods/functions": []
-    },
-    "backend/utils/async-handler.js": {
-        "description": "Exports a utility function that wraps async functions to handle errors automatically.",
-        "imports": [
-            "No imports found."
-        ],
-        "methods/functions": []
-    },
-    "backend/utils/cache-posts.js": {
-        "description": "Provides utility functions for interacting with Redis to cache, retrieve, and delete post data.",
-        "imports": [
-            "import { getRedisClient } from '../services/redis.js';",
-            "import { REDIS_PREFIX } from './constants.js';"
-        ],
-        "methods/functions": [
-            "retrieveDataFromCache",
-            "storeDataInCache",
-            "deleteDataFromCache"
-        ]
-    },
-    "backend/utils/constants.js": {
-        "description": "Defines and exports constants used throughout the application, including HTTP status codes, response messages, and Redis keys.",
-        "imports": [
-            "No imports found."
-        ],
-        "methods/functions": [
-            "validCategories",
-            "HTTP_STATUS",
-            "RESPONSE_MESSAGES",
-            "REDIS_KEYS",
-            "REDIS_PREFIX"
-        ]
-    },
-    "backend/utils/cookie_options.js": {
-        "description": "Exports configuration options for cookies, including settings based on the environment.",
-        "imports": [
-            "import { ACCESS_COOKIE_MAXAGE, NODE_ENV } from '../config/utils.js';"
-        ],
-        "methods/functions": []
-    },
-    "backend/utils/middleware.js": {
-        "description": "Defines and exports middleware functions, including cache handling middleware.",
-        "imports": [
-            "import { retrieveDataFromCache } from './cache-posts.js';",
-            "import { HTTP_STATUS } from './constants.js';"
-        ],
-        "methods/functions": []
-    },
-    {
-    "frontend/components.json": {
-        "description": "Configuration file used to manage or define frontend components within the project.",
-        "imports": [
-            "No imports found."
-        ],
-        "methods/functions": [
-            "No methods/functions found."
-        ]
-    },
-    "frontend/eslint.config.js": {
-        "description": "Configuration file for ESLint, setting up linting rules and environments for the TypeScript and React project.",
-        "imports": [
-            "import globals from 'globals';",
-            "import tseslint from 'typescript-eslint';",
-            "import pluginReactConfig from 'eslint-plugin-react/configs/recommended.js';"
-        ],
-        "methods/functions": [
-            "default"
-        ]
-    },
-    "frontend/index.html": {
-        "description": "The main HTML file for the frontend application, serving as the entry point for the web application.",
-        "imports": [
-            "No imports found."
-        ],
-        "methods/functions": [
-            "No methods/functions found."
-        ]
-    },
-    "frontend/jest.config.ts": {
-        "description": "Configuration file for Jest, setting up the testing environment for the TypeScript and React project.",
-        "imports": [
-            "No imports found."
-        ],
-        "methods/functions": [
-            "default"
-        ]
-    },
-    "frontend/package.json": {
-        {
+  },
+  "backend/routes/auth.js": {
+    "description": "Router handling user authentication routes, including login, registration, and logout.",
+    "imports": [
+      "import { Router } from 'express';",
+      "import { authMiddleware } from '../middlewares/auth-middleware.js';",
+      "import passport from '../config/passport.js';",
+      "import jwt from 'jsonwebtoken';"
+    ],
+    "methods/functions": [
+      "default"
+    ]
+  },
+  "backend/routes/posts.js": {
+    "description": "Router handling blog post-related routes, including creation, retrieval, and deletion of posts.",
+    "imports": [
+      "import { Router } from 'express';",
+      "import { REDIS_KEYS } from '../utils/constants.js';",
+      "import { cacheHandler } from '../utils/middleware.js';",
+      "import { isAdminMiddleware, authMiddleware } from '../middlewares/auth-middleware.js';",
+      "import { isAuthorMiddleware } from '../middlewares/post-middleware.js';"
+    ],
+    "methods/functions": [
+      "default"
+    ]
+  },
+  "backend/routes/user.js": {
+    "description": "Router handling user-related routes, including retrieving and updating user profiles.",
+    "imports": [
+      "import { Router } from 'express';",
+      "import { isAdminMiddleware, authMiddleware } from '../middlewares/auth-middleware.js';"
+    ],
+    "methods/functions": [
+      "default"
+    ]
+  },
+  "backend/server.js": {
+    "description": "The main entry point for the Node.js application, setting up the server and connecting to the database.",
+    "imports": [
+      "import app from './app.js';",
+      "import connectDB from './config/db.js';",
+      "import { PORT } from './config/utils.js';"
+    ],
+    "methods/functions": [
+      "No methods/functions found."
+    ]
+  },
+  "backend/services/redis.js": {
+    "description": "Service file for connecting to and managing Redis, used for caching and other purposes.",
+    "imports": [
+      "import redis from 'redis';",
+      "import { promisify } from 'util';",
+      "import { REDIS_URL } from '../config/utils.js';"
+    ],
+    "methods/functions": [
+      "default"
+    ]
+  },
+  "backend/tests/integration/controllers/posts-controller.test.js": {
+    "description": "Integration test for the posts controller, ensuring that the API works as expected when interacting with other components.",
+    "imports": [
+      "import request from 'supertest';",
+      "import Post from '../../../models/post.js';",
+      "import server from '../../../server.js';",
+      "import { validCategories, HTTP_STATUS, RESPONSE_MESSAGES } from '../../../utils/constants.js';",
+      "import { createPostObject } from '../../utils/helper-objects.js';",
+      "import { expect, jest, it, afterAll, describe } from '@jest/globals';"
+    ],
+    "methods/functions": [
+      "No methods/functions found."
+    ]
+  },
+  "backend/tests/teardown.js": {
+    "description": "Script to tear down the test environment, cleaning up any remaining data or processes.",
+    "imports": [
+      "No imports found."
+    ],
+    "methods/functions": [
+      "default"
+    ]
+  },
+  "backend/tests/unit/controllers/posts-controller.test.js": {
+    "description": "Unit test for the posts controller, testing individual functions and logic in isolation.",
+    "imports": [
+      "import Post from '../../../models/post.js';",
+      "import { expect, jest, it, describe } from '@jest/globals';",
+      "import { validCategories, HTTP_STATUS, RESPONSE_MESSAGES } from '../../../utils/constants.js';",
+      "import { createPostObject, createRequestObject, res } from '../../utils/helper-objects.js';"
+    ],
+    "methods/functions": [
+      "No methods/functions found."
+    ]
+  },
+  "backend/tests/utils/helper-objects.js": {
+    "description": "Utility file providing mock objects and helper functions for testing purposes.",
+    "imports": [
+      "import { validCategories } from '../../utils/constants';",
+      "import { jest } from '@jest/globals';"
+    ],
+    "methods/functions": []
+  },
+  "backend/types/role-type.js": {
+    "description": "Defines and exports role types used throughout the application.",
+    "imports": [
+      "No imports found."
+    ],
+    "methods/functions": [
+      "const"
+    ]
+  },
+  "backend/utils/api-error.js": {
+    "description": "Defines and exports a custom API error class used for standardized error handling.",
+    "imports": [
+      "import { RESPONSE_MESSAGES } from './constants.js';"
+    ],
+    "methods/functions": []
+  },
+  "backend/utils/api-response.js": {
+    "description": "Defines and exports a custom API response class for consistent API responses.",
+    "imports": [
+      "import { HTTP_STATUS } from './constants.js';"
+    ],
+    "methods/functions": []
+  },
+  "backend/utils/async-handler.js": {
+    "description": "Exports a utility function that wraps async functions to handle errors automatically.",
+    "imports": [
+      "No imports found."
+    ],
+    "methods/functions": []
+  },
+  "backend/utils/cache-posts.js": {
+    "description": "Provides utility functions for interacting with Redis to cache, retrieve, and delete post data.",
+    "imports": [
+      "import { getRedisClient } from '../services/redis.js';",
+      "import { REDIS_PREFIX } from './constants.js';"
+    ],
+    "methods/functions": [
+      "retrieveDataFromCache",
+      "storeDataInCache",
+      "deleteDataFromCache"
+    ]
+  },
+  "backend/utils/constants.js": {
+    "description": "Defines and exports constants used throughout the application, including HTTP status codes, response messages, and Redis keys.",
+    "imports": [
+      "No imports found."
+    ],
+    "methods/functions": [
+      "validCategories",
+      "HTTP_STATUS",
+      "RESPONSE_MESSAGES",
+      "REDIS_KEYS",
+      "REDIS_PREFIX"
+    ]
+  },
+  "backend/utils/cookie_options.js": {
+    "description": "Exports configuration options for cookies, including settings based on the environment.",
+    "imports": [
+      "import { ACCESS_COOKIE_MAXAGE, NODE_ENV } from '../config/utils.js';"
+    ],
+    "methods/functions": []
+  },
+  "backend/utils/middleware.js": {
+    "description": "Defines and exports middleware functions, including cache handling middleware.",
+    "imports": [
+      "import { retrieveDataFromCache } from './cache-posts.js';",
+      "import { HTTP_STATUS } from './constants.js';"
+    ],
+    "methods/functions": []
+  },
+  "frontend/components.json": {
+    "description": "Configuration file used to manage or define frontend components within the project.",
+    "imports": [
+      "No imports found."
+    ],
+    "methods/functions": [
+      "No methods/functions found."
+    ]
+  },
+  "frontend/eslint.config.js": {
+    "description": "Configuration file for ESLint, setting up linting rules and environments for the TypeScript and React project.",
+    "imports": [
+      "import globals from 'globals';",
+      "import tseslint from 'typescript-eslint';",
+      "import pluginReactConfig from 'eslint-plugin-react/configs/recommended.js';"
+    ],
+    "methods/functions": [
+      "default"
+    ]
+  },
+  "frontend/index.html": {
+    "description": "The main HTML file for the frontend application, serving as the entry point for the web application.",
+    "imports": [
+      "No imports found."
+    ],
+    "methods/functions": [
+      "No methods/functions found."
+    ]
+  },
+  "frontend/jest.config.ts": {
+    "description": "Configuration file for Jest, setting up the testing environment for the TypeScript and React project.",
+    "imports": [
+      "No imports found."
+    ],
+    "methods/functions": [
+      "default"
+    ]
+  },
+  "frontend/package.json": {
     "description": "Configuration file for managing project dependencies, scripts, and metadata for the frontend application.",
     "dependencies": {
-        "@hookform/resolvers": "^3.5.0",
-        "@tsparticles/react": "^3.0.0",
-        "axios": "^1.6.1",
-        "class-variance-authority": "^0.7.0",
-        "clsx": "^2.0.0",
-        "lucide-react": "^0.292.0",
-        "react": "^18.2.0",
-        "react-dom": "^18.2.0",
-        "react-hook-form": "^7.51.5",
-        "react-router-dom": "^6.18.0",
-        "react-tag-input": "^6.8.1",
-        "react-toastify": "^9.1.3",
-        "tailwind-merge": "^2.0.0",
-        "tailwindcss-animate": "^1.0.7",
-        "tsparticles": "^3.4.0",
-        "zod": "^3.23.8"
+      "@hookform/resolvers": "^3.5.0",
+      "@tsparticles/react": "^3.0.0",
+      "axios": "^1.6.1",
+      "class-variance-authority": "^0.7.0",
+      "clsx": "^2.0.0",
+      "lucide-react": "^0.292.0",
+      "react": "^18.2.0",
+      "react-dom": "^18.2.0",
+      "react-hook-form": "^7.51.5",
+      "react-router-dom": "^6.18.0",
+      "react-tag-input": "^6.8.1",
+      "react-toastify": "^9.1.3",
+      "tailwind-merge": "^2.0.0",
+      "tailwindcss-animate": "^1.0.7",
+      "tsparticles": "^3.4.0",
+      "zod": "^3.23.8"
     },
     "devDependencies": {
-        "@babel/preset-env": "^7.23.6",
-        "@babel/preset-react": "^7.23.3",
-        "@babel/preset-typescript": "^7.23.3",
-        "@eslint/compat": "^1.0.1",
-        "@eslint/js": "^9.3.0",
-        "@stylistic/eslint-plugin-js": "^2.1.0",
-        "@testing-library/dom": "^9.3.3",
-        "@testing-library/jest-dom": "^6.1.5",
-        "@testing-library/react": "^14.1.2",
-        "@testing-library/user-event": "^14.5.1",
-        "@types/jest": "^29.5.11",
-        "@types/node": "^20.12.12",
-        "@types/react": "^18.2.37",
-        "@types/react-dom": "^18.2.15",
-        "@typescript-eslint/eslint-plugin": "^6.11.0",
-        "@typescript-eslint/parser": "^6.11.0",
-        "@vitejs/plugin-react-swc": "^3.4.1",
-        "@vitest/coverage-v8": "^1.6.0",
-        "autoprefixer": "^10.4.16",
-        "eslint": "^8.57.0",
-        "eslint-config-prettier": "^9.1.0",
-        "eslint-plugin-babel": "^5.3.1",
-        "eslint-plugin-import": "^2.29.1",
-        "eslint-plugin-prettier": "^5.1.3",
-        "eslint-plugin-react": "^7.34.1",
-        "eslint-plugin-react-hooks": "^4.6.0",
-        "eslint-plugin-react-refresh": "^0.4.4",
-        "globals": "^15.3.0",
-        "jest": "^29.7.0",
-        "jest-environment-jsdom": "^29.7.0",
-        "jsdom": "^24.0.0",
-        "lint-staged": "^15.2.2",
-        "msw": "^2.3.0",
-        "postcss": "^8.4.31",
-        "prettier": "^3.2.5",
-        "prettier-plugin-tailwindcss": "^0.5.7",
-        "tailwindcss": "^3.3.5",
-        "ts-jest": "^29.1.1",
-        "ts-jest-mock-import-meta": "^1.1.0",
-        "ts-node": "^10.9.2",
-        "typescript": "^5.2.2",
-        "typescript-eslint": "^7.10.0",
-        "vite": "^4.5.0",
-        "vitest": "^1.6.0"
+      "@babel/preset-env": "^7.23.6",
+      "@babel/preset-react": "^7.23.3",
+      "@babel/preset-typescript": "^7.23.3",
+      "@eslint/compat": "^1.0.1",
+      "@eslint/js": "^9.3.0",
+      "@stylistic/eslint-plugin-js": "^2.1.0",
+      "@testing-library/dom": "^9.3.3",
+      "@testing-library/jest-dom": "^6.1.5",
+      "@testing-library/react": "^14.1.2",
+      "@testing-library/user-event": "^14.5.1",
+      "@types/jest": "^29.5.11",
+      "@types/node": "^20.12.12",
+      "@types/react": "^18.2.37",
+      "@types/react-dom": "^18.2.15",
+      "@typescript-eslint/eslint-plugin": "^6.11.0",
+      "@typescript-eslint/parser": "^6.11.0",
+      "@vitejs/plugin-react-swc": "^3.4.1",
+      "@vitest/coverage-v8": "^1.6.0",
+      "autoprefixer": "^10.4.16",
+      "eslint": "^8.57.0",
+      "eslint-config-prettier": "^9.1.0",
+      "eslint-plugin-babel": "^5.3.1",
+      "eslint-plugin-import": "^2.29.1",
+      "eslint-plugin-prettier": "^5.1.3",
+      "eslint-plugin-react": "^7.34.1",
+      "eslint-plugin-react-hooks": "^4.6.0",
+      "eslint-plugin-react-refresh": "^0.4.4",
+      "globals": "^15.3.0",
+      "jest": "^29.7.0",
+      "jest-environment-jsdom": "^29.7.0",
+      "jsdom": "^24.0.0",
+      "lint-staged": "^15.2.2",
+      "msw": "^2.3.0",
+      "postcss": "^8.4.31",
+      "prettier": "^3.2.5",
+      "prettier-plugin-tailwindcss": "^0.5.7",
+      "tailwindcss": "^3.3.5",
+      "ts-jest": "^29.1.1",
+      "ts-jest-mock-import-meta": "^1.1.0",
+      "ts-node": "^10.9.2",
+      "typescript": "^5.2.2",
+      "typescript-eslint": "^7.10.0",
+      "vite": "^4.5.0",
+      "vitest": "^1.6.0"
     },
     "scripts": {
-        "dev": "vite",
-        "build": "tsc -p tsconfig.prod.json && vite build",
-        "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
-        "preview": "vite preview",
-        "format": "prettier --write .",
-        "test": "vitest run",
-        "coverage": "vitest run --coverage ",
-        "prepare": "cd .. && npm install"
+      "dev": "vite",
+      "build": "tsc -p tsconfig.prod.json && vite build",
+      "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+      "preview": "vite preview",
+      "format": "prettier --write .",
+      "test": "vitest run",
+      "coverage": "vitest run --coverage ",
+      "prepare": "cd .. && npm install"
     },
     "version": "0.0.0"
-    },
-    "frontend/postcss.config.js": {
-        "description": "Configuration file for PostCSS, setting up the processing of CSS files for the frontend application.",
-        "imports": [
-            "No imports found."
-        ],
-        "methods/functions": [
-            "default"
-        ]
-    },
-    {
-    "src/App.tsx": {
-        "description": "Main application component that sets up routing for different pages in the React application.",
-        "imports": [
-            "import { BrowserRouter, Routes, Route } from 'react-router-dom';",
-            "import HomePage from '@/pages/home-page';",
-            "import AddBlog from '@/pages/add-blog';",
-            "import DetailsPage from '@/pages/details-page';",
-            "import ScrollToTop from '@/components/scroll-to-top';",
-            "import Footer from '@/layouts/footer-layout';",
-            "import SignIn from '@/pages/signin-page';",
-            "import SignUp from '@/pages/signup-page';",
-            "import AdminUsers from '@/pages/admin-users';",
-            "import AdminBlogs from '@/pages/admin-blogs';",
-            "import NotFound from '@/pages/not-found';",
-            "import UnprotectedRoute from './components/unprotected-route';",
-            "import { useLayoutEffect } from 'react';",
-            "import RequireAuth from './components/require-auth-blog';",
-            "import RequireAuthBlog from './components/require-auth-blog';",
-            "import useThemeClass from './utils/theme-changer';",
-            "import AdminContainer from './components/admin-container';",
-            "import { Role } from './types/role-type.tsx';",
-            "import EditBlog from './pages/edit-blog.tsx';"
-        ],
-        "methods/functions": [
-            "App",
-            "default"
-        ]
-    },
-    "src/assets/svg/bars-icon.tsx": {
-        "description": "React component rendering the bars icon as an SVG element.",
-        "imports": [
-            "No imports found."
-        ],
-        "methods/functions": [
-            "default"
-        ]
-    },
-    "src/assets/svg/blog-icon.tsx": {
-        "description": "React component rendering the blog icon as an SVG element.",
-        "imports": [
-            "No imports found."
-        ],
-        "methods/functions": [
-            "default"
-        ]
-    },
-    "src/assets/svg/pen-icon.tsx": {
-        "description": "React component rendering the pen icon as an SVG element.",
-        "imports": [
-            "No imports found."
-        ],
-        "methods/functions": [
-            "default"
-        ]
-    },
-    "src/assets/svg/trash-icon.tsx": {
-        "description": "React component rendering the trash icon as an SVG element.",
-        "imports": [
-            "No imports found."
-        ],
-        "methods/functions": [
-            "default"
-        ]
-    },
-    "src/assets/svg/user-icon.tsx": {
-        "description": "React component rendering the user icon as an SVG element.",
-        "imports": [
-            "No imports found."
-        ],
-        "methods/functions": [
-            "default"
-        ]
-    },
-    {
-    "frontend/components/admin-container.tsx": {
-        "description": "Component that provides a layout for the admin section, including the sidebar and main content area.",
-        "imports": [
-            "import AdminSidebar from '@/components/admin-sidebar';",
-            "import { Outlet } from 'react-router-dom';"
-        ],
-        "methods/functions": [
-            "default"
-        ]
-    },
-    "frontend/components/admin-sidebar.tsx": {
-        "description": "Component that renders the sidebar for the admin section, allowing navigation between different admin pages.",
-        "imports": [
-            "import { NavLink, useNavigate } from 'react-router-dom';",
-            "import UserIcon from '@/assets/svg/user-icon';",
-            "import BlogIcon from '@/assets/svg/blog-icon';",
-            "import BarIcons from '@/assets/svg/bars-icon';",
-            "import { useState } from 'react';",
-            "import CloseIcon from '@/assets/svg/close-icon';"
-        ],
-        "methods/functions": [
-            "default"
-        ]
-    },
-    "frontend/components/blog-feed.tsx": {
-        "description": "Component that fetches and displays a feed of blog posts, including featured and latest posts.",
-        "imports": [
-            "import axios from 'axios';",
-            "import { useEffect, useState } from 'react';",
-            "import FeaturedPostCard from '@/components/featured-post-card';",
-            "import LatestPostCard from '@/components/latest-post-card';",
-            "import { FeaturedPostCardSkeleton } from '@/components/skeletons/featured-post-card-skeleton';",
-            "import { LatestPostCardSkeleton } from '@/components/skeletons/latest-post-card-skeleton';",
-            "import CategoryPill from '@/components/category-pill';",
-            "import { categories } from '@/utils/category-colors';"
-        ],
-        "methods/functions": [
-            "default"
-        ]
-    },
-    "frontend/components/category-pill.tsx": {
-        "description": "Component that renders a pill-style label for blog post categories.",
-        "imports": [
-            "import { categoryColors } from '@/utils/category-colors';"
-        ],
-        "methods/functions": [
-            "default"
-        ]
-    },
-    "frontend/components/featured-post-card.tsx": {
-        "description": "Component that displays a featured blog post with its title, description, and image.",
-        "imports": [
-            "import { useNavigate } from 'react-router-dom';",
-            "import { FeaturedPostCardSkeleton } from '@/components/skeletons/featured-post-card-skeleton';"
-        ],
-        "methods/functions": [
-            "default"
-        ]
-    },
-    "frontend/components/form-blog.tsx": {
-        "description": "Component that renders a form for creating or editing blog posts.",
-        "imports": [
-            "import { useForm } from 'react-hook-form';",
-            "import { zodResolver } from '@hookform/resolvers/zod';",
-            "import { useNavigate } from 'react-router-dom';",
-            "import { z } from 'zod';"
-        ],
-        "methods/functions": [
-            "default"
-        ]
-    },
-    "frontend/components/hero.tsx": {
-        "description": "Component that displays the hero section of the homepage, usually featuring a prominent image and title.",
-        "imports": [
-            "import HeroImage from '@/assets/wanderlustbg.webp';"
-        ],
-        "methods/functions": [
-            "default"
-        ]
-    },
-    "frontend/components/latest-post-card.tsx": {
-        "description": "Component that displays the latest blog post with its title and a brief description.",
-        "imports": [
-            "import { LatestPostCardSkeleton } from '@/components/skeletons/latest-post-card-skeleton';"
-        ],
-        "methods/functions": [
-            "default"
-        ]
-    },
-    "frontend/components/modal.tsx": {
-        "description": "Component that renders a modal dialog for various interactions like confirmation, input, etc.",
-        "imports": [
-            "import { useState } from 'react';"
-        ],
-        "methods/functions": [
-            "default"
-        ]
-    },
-    "frontend/components/post-card.tsx": {
-        "description": "Component that renders a card displaying a blog post with its title, image, and summary.",
-        "imports": [
-            "import { PostCardSkeleton } from '@/components/skeletons/post-card-skeleton';"
-        ],
-        "methods/functions": [
-            "default"
-        ]
-    },
-    "frontend/components/PostMobileViewCardSkeleton.tsx": {
-        "description": "Skeleton component that renders a placeholder for a mobile view of a blog post card while data is loading.",
-        "imports": [
-            "import { Skeleton } from '@/components/ui/skeleton';"
-        ],
-        "methods/functions": [
-            "default"
-        ]
-    },
-    "frontend/components/PostMobileViewComponent.tsx": {
-        "description": "Component that renders the mobile view of a blog post card, optimized for smaller screens.",
-        "imports": [
-            "import { PostMobileViewCardSkeleton } from '@/components/skeletons/post-mobile-view-card-skeleton';"
-        ],
-        "methods/functions": [
-            "default"
-        ]
-    },
-    "frontend/components/require-auth-blog.tsx": {
-        "description": "Higher-order component that requires the user to be authenticated before accessing certain blog routes.",
-        "imports": [
-            "import { Navigate } from 'react-router-dom';",
-            "import useAuth from '@/hooks/useAuth';"
-        ],
-        "methods/functions": [
-            "default"
-        ]
-    },
-    "frontend/components/require-auth.tsx": {
-        "description": "Higher-order component that requires the user to be authenticated before accessing protected routes.",
-        "imports": [
-            "import { Navigate } from 'react-router-dom';",
-            "import useAuth from '@/hooks/useAuth';"
-        ],
-        "methods/functions": [
-            "default"
-        ]
-    },
-    "frontend/components/scroll-to-top.tsx": {
-        "description": "Component that scrolls the window to the top when the user navigates to a new page.",
-        "imports": [
-            "import { useEffect } from 'react';",
-            "import { useLocation } from 'react-router-dom';"
-        ],
-        "methods/functions": [
-            "default"
-        ]
-    },
-    "frontend/components/skeletons/add-blog-post-skeleton.tsx": {
-        "description": "Skeleton component that renders a placeholder for the add blog post form while data is loading.",
-        "imports": [
-            "import { Skeleton } from '@/components/ui/skeleton';"
-        ],
-        "methods/functions": [
-            "default"
-        ]
-    },
-    "frontend/components/skeletons/featured-post-card-skeleton.tsx": {
-        "description": "Skeleton component that renders a placeholder for a featured post card while data is loading.",
-        "imports": [
-            "import { Skeleton } from '@/components/ui/skeleton';"
-        ],
-        "methods/functions": [
-            "default"
-        ]
-    },
-    "frontend/components/skeletons/latest-post-card-skeleton.tsx": {
-        "description": "Skeleton component that renders a placeholder for a latest post card while data is loading.",
-        "imports": [
-            "import { Skeleton } from '@/components/ui/skeleton';"
-        ],
-        "methods/functions": [
-            "default"
-        ]
-    },
-    "frontend/components/skeletons/loader.tsx": {
-        "description": "Component that renders a loading spinner or animation.",
-        "imports": [
-            "No imports found."
-        ],
-        "methods/functions": [
-            "default"
-        ]
-    },
-    "frontend/components/skeletons/post-card-skeleton.tsx": {
-        "description": "Skeleton component that renders a placeholder for a post card while data is loading.",
-        "imports": [
-            "import { Skeleton } from '@/components/ui/skeleton';"
-        ],
-        "methods/functions": [
-            "default"
-        ]
-    },
-    "frontend/components/skeletons/related-post-card-skeleton.tsx": {
-        "description": "Skeleton component that renders a placeholder for related post cards while data is loading.",
-        "imports": [
-            "import { Skeleton } from '../ui/skeleton';"
-        ],
-        "methods/functions": [
-            "default"
-        ]
-    },
-    "frontend/components/theme-toggle-button.tsx": {
-        "description": "Component that toggles the application's theme between light and dark modes.",
-        "imports": [
-            "import { useLayoutEffect, useState } from 'react';",
-            "import Sun from '@/assets/svg/sun.svg';",
-            "import Moon from '@/assets/svg/moon.svg';",
-            "import useThemeClass from '@/utils/theme-changer';"
-        ],
-        "methods/functions": [
-            "default"
-        ]
-    },
-    "frontend/components/ui/skeleton.tsx": {
-        "description": "Utility component for rendering a skeleton placeholder, used for loading states.",
-        "imports": [
-            "import { cn } from '@/lib/utils';"
-        ],
-        "methods/functions": [
-            "default"
-        ]
-    },
-    "frontend/components/unprotected-route.tsx": {
-        "description": "Component that handles routes accessible without authentication, redirecting authenticated users away.",
-        "imports": [
-            "import { Navigate, Outlet } from 'react-router-dom';",
-            "import useAuthData from '@/hooks/useAuthData';"
-        ],
-        "methods/functions": [
-            "default"
-        ]
-    },
-    {
-    "frontend/config/jest/file-mock.ts": {
-        "description": "Configuration file for mocking files during Jest testing.",
-        "imports": [
-            "No imports found."
-        ],
-        "methods/functions": [
-            "module.exports = 'test-file-stub';"
-        ]
-    },
-    "frontend/config/jest/setup-tests.ts": {
-        "description": "Setup file for Jest, configuring the testing environment with additional matchers and utilities.",
-        "imports": [
-            "import '@testing-library/jest-dom';"
-        ],
-        "methods/functions": []
-    },
-    "frontend/config/jest/style-mock.ts": {
-        "description": "Configuration file for mocking style files during Jest testing.",
-        "imports": [
-            "No imports found."
-        ],
-        "methods/functions": [
-            "module.exports = {};"
-        ]
-    },
-    "frontend/constants/images.ts": {
-        "description": "File defining constants related to image URLs used in the application.",
-        "imports": [
-            "No imports found."
-        ],
-        "methods/functions": []
-    },
-    "frontend/helpers/axios-instance.ts": {
-        "description": "Helper file that sets up and exports a pre-configured Axios instance for making HTTP requests.",
-        "imports": [
-            "import axios from 'axios';",
-            "import { BASE_API_URL } from '@/constants/api';"
-        ],
-        "methods/functions": []
-    },
-    "frontend/hooks/useAuthData.ts": {
-        "description": "Custom hook that provides authentication data and utility functions for managing user authentication.",
-        "imports": [
-            "import { useContext } from 'react';",
-            "import { AuthContext } from '@/context/auth-context';"
-        ],
-        "methods/functions": []
-    },
-    "frontend/index.css": {
-        "description": "Main CSS file for the frontend application, defining global styles and theme configurations.",
-        "imports": [
-            "No imports found."
-        ],
-        "methods/functions": []
-    },
-    "frontend/layouts/footer-layout.tsx": {
-        "description": "Layout component rendering the footer section of the application, typically used across multiple pages.",
-        "imports": [
-            "No imports found."
-        ],
-        "methods/functions": [
-            "FooterLayout"
-        ]
-    },
-    "frontend/layouts/header-layout.tsx": {
-        "description": "Layout component rendering the header section of the application, including navigation and branding.",
-        "imports": [
-            "import { NavLink } from 'react-router-dom';",
-            "import ThemeToggle from '@/components/theme-toggle-button';"
-        ],
-        "methods/functions": [
-            "HeaderLayout"
-        ]
-    },
-    "frontend/lib/types.ts": {
-        "description": "File defining TypeScript types used throughout the application for consistency and type safety.",
-        "imports": [
-            "No imports found."
-        ],
-        "methods/functions": []
-    },
-    "frontend/lib/utils.ts": {
-        "description": "Utility functions used across the application, providing common functionalities like string manipulation and data formatting.",
-        "imports": [
-            "No imports found."
-        ],
-        "methods/functions": []
-    },
-    "frontend/main.tsx": {
-        "description": "Main entry point for the frontend application, rendering the root component and setting up the React application.",
-        "imports": [
-            "import React from 'react';",
-            "import ReactDOM from 'react-dom';",
-            "import App from '@/App';",
-            "import '@/index.css';"
-        ],
-        "methods/functions": [
-            "main"
-        ]
-    },
-    "frontend/pages/add-blog.tsx": {
-        "description": "Page component rendering the form to add a new blog post, including validation and submission logic.",
-        "imports": [
-            "import FormBlog from '@/components/form-blog';"
-        ],
-        "methods/functions": [
-            "AddBlog"
-        ]
-    },
-    "frontend/pages/admin-blogs.tsx": {
-        "description": "Admin page for managing blog posts, including viewing, editing, and deleting posts.",
-        "imports": [
-            "import AdminContainer from '@/components/admin-container';",
-            "import BlogFeed from '@/components/blog-feed';"
-        ],
-        "methods/functions": [
-            "AdminBlogs"
-        ]
-    },
-    "frontend/pages/admin-users.tsx": {
-        "description": "Admin page for managing users, including viewing, editing, and deleting user accounts.",
-        "imports": [
-            "import AdminContainer from '@/components/admin-container';"
-        ],
-        "methods/functions": [
-            "AdminUsers"
-        ]
-    },
-    "frontend/pages/details-page.tsx": {
-        "description": "Page component rendering the details of a specific blog post, including its content and related posts.",
-        "imports": [
-            "import PostCard from '@/components/post-card';",
-            "import PostMobileViewComponent from '@/components/PostMobileViewComponent';"
-        ],
-        "methods/functions": [
-            "DetailsPage"
-        ]
-    },
-    "frontend/pages/edit-blog.tsx": {
-        "description": "Page component rendering the form to edit an existing blog post, including validation and submission logic.",
-        "imports": [
-            "import FormBlog from '@/components/form-blog';"
-        ],
-        "methods/functions": [
-            "EditBlog"
-        ]
-    },
-    "frontend/pages/home-page.tsx": {
-        "description": "Home page of the application, featuring a hero section, blog feed, and other main content.",
-        "imports": [
-            "import Hero from '@/components/hero';",
-            "import BlogFeed from '@/components/blog-feed';"
-        ],
-        "methods/functions": [
-            "HomePage"
-        ]
-    },
-    "frontend/pages/not-found.tsx": {
-        "description": "Page component rendering a 404 error message for when a user navigates to a non-existent route.",
-        "imports": [
-            "import { Link } from 'react-router-dom';"
-        ],
-        "methods/functions": [
-            "NotFound"
-        ]
-    },
-    "frontend/pages/signin-page.tsx": {
-        "description": "Page component rendering the sign-in form, including validation and authentication logic.",
-        "imports": [
-            "import { Link, useNavigate } from 'react-router-dom';",
-            "import { useForm } from 'react-hook-form';",
-            "import { zodResolver } from '@hookform/resolvers/zod';",
-            "import { toast } from 'react-toastify';",
-            "import axiosInstance from '@/helpers/axios-instance';"
-        ],
-        "methods/functions": [
-            "SigninPage"
-        ]
-    },
-    "frontend/pages/signup-page.tsx": {
-        "description": "Page component rendering the sign-up form, including validation and user registration logic.",
-        "imports": [
-            "import { Link, useNavigate } from 'react-router-dom';",
-            "import { useForm } from 'react-hook-form';",
-            "import { zodResolver } from '@hookform/resolvers/zod';",
-            "import { toast } from 'react-toastify';",
-            "import axiosInstance from '@/helpers/axios-instance';"
-        ],
-        "methods/functions": [
-            "SignupPage"
-        ]
-    },
-    {
-    "frontend/types/post-type.tsx": {
-        "description": "Exports functionality: export default Post;.",
-        "imports": [
-            "No imports found."
-        ],
-        "methods/functions": [
-            "default"
-        ]
-    },
-    "frontend/types/role-type.tsx": {
-        "description": "Exports functionality: export enum Role {.",
-        "imports": [
-            "No imports found."
-        ],
-        "methods/functions": [
-            "enum"
-        ]
-    },
-    "frontend/types/test-props.ts": {
-        "description": "Exports functionality: export type { TestProps };.",
-        "imports": [
-            "No imports found."
-        ],
-        "methods/functions": [
-            "type"
-        ]
-    },
-    "frontend/utils/category-colors.ts": {
-        "description": "Exports functionality: export const categories: string[] = Array.from(categoryColors.keys());. Exports functionality: export function getCategoryColors(category: string): [string, string] {.",
-        "imports": [
-            "No imports found."
-        ],
-        "methods/functions": [
-            "const",
-            "function",
-            "function"
-        ]
-    },
-    "frontend/utils/format-post-time.tsx": {
-        "description": "Exports functionality: export default function formatPostTime(time: string) {.",
-        "imports": [
-            "No imports found."
-        ],
-        "methods/functions": [
-            "default",
-            "default"
-        ]
-    },
-    "frontend/utils/slug-generator.ts": {
-        "description": "Exports functionality: export function createSlug(title: string): string {.",
-        "imports": [
-            "No imports found."
-        ],
-        "methods/functions": [
-            "function",
-            "function"
-        ]
-    },
-    "frontend/utils/theme-changer.ts": {
-        "description": "Exports functionality: export default useThemeClass;.",
-        "imports": [
-            "No imports found."
-        ],
-        "methods/functions": [
-            "default"
-        ]
-    },
-    "frontend/utils/user-state.ts": {
-        "description": "Exports functionality: export const userState = atom<UserState | null>({ key: 'userState', default: null });.",
-        "imports": [
-            "No imports found."
-        ],
-        "methods/functions": [
-            "const"
-        ]
-    },
-    "frontend/tailwind.config.js": {
-        "description": "Configuration file for Tailwind CSS, defining the styles, colors, and responsive breakpoints for the project.",
-        "imports": [
-            "No imports found."
-        ],
-        "methods/functions": [
-            "No methods/functions found."
-        ]
-    },
-    "frontend/test-setup.ts": {
-        "description": "Setup file for testing, configuring the testing environment with utilities and global settings.",
-        "imports": [
-            "import { afterAll, afterEach, beforeAll } from 'vitest';",
-            "import { cleanup } from '@testing-library/react';",
-            "import '@testing-library/jest-dom/vitest';",
-            "import { server } from './src/__tests__/mocks/node-mock';"
-        ],
-        "methods/functions": [
-            "each"
-        ]
-    },
-    "frontend/tsconfig.json": {
-        "description": "Configuration file for TypeScript, defining compiler options and project settings.",
-        "imports": [
-            "No imports found."
-        ],
-        "methods/functions": [
-            "No methods/functions found."
-        ]
-    },
-    "frontend/tsconfig.node.json": {
-        "description": "Configuration file for TypeScript, tailored for Node.js environments.",
-        "imports": [
-            "No imports found."
-        ],
-        "methods/functions": [
-            "No methods/functions found."
-        ]
-    },
-    "frontend/tsconfig.prod.json": {
-        "description": "Production-specific configuration file for TypeScript, defining optimized compiler settings.",
-        "imports": [
-            "No imports found."
-        ],
-        "methods/functions": [
-            "No methods/functions found."
-        ]
-    },
-    "frontend/vercel.json": {
-        "description": "Configuration file for deploying the application on Vercel, specifying settings like rewrites and redirects.",
-        "imports": [
-            "No imports found."
-        ],
-        "methods/functions": [
-            "No methods/functions found."
-        ]
-    },
-    "frontend/vite.config.ts": {
-        "description": "Configuration file for Vite, setting up plugins, aliases, and testing configurations.",
-        "imports": [
-            "import { defineConfig, UserConfig } from 'vitest/config';",
-            "import react from '@vitejs/plugin-react-swc';",
-            "import path from 'path';",
-            "import { configDefaults } from 'vitest/config';"
-        ],
-        "methods/functions": [
-            "default"
-        ]
-    },
-    {
-    "package.json": {
-        "description": "Configuration file for managing project dependencies, scripts, and metadata for the application.",
-        "dependencies": {
-            "concurrently": "^8.2.2",
-            "js-cookie": "^3.0.5"
-        },
-        "devDependencies": {
-            "husky": "^8.0.0"
-        },
-        "scripts": {
-            "start-frontend": "cd frontend && npm run dev",
-            "start-backend": "cd backend && npm start",
-            "start": "concurrently -n \"FRONTEND,BACKEND\" -c \"bgBlue,bgYellow\" -p \"[{name}]\" \"npm run start-frontend\" \"npm run start-backend\"",
-            "install-frontend": "cd frontend && npm i",
-            "install-backend": "cd backend && npm i",
-            "installer": "npm i && npm run install-backend && npm run install-frontend",
-            "prepare": "husky install && chmod ug+x .husky/*"
-        },
-        "version": "No version specified."
-    }
+  },
+  "frontend/postcss.config.js": {
+    "description": "Configuration file for PostCSS, setting up the processing of CSS files for the frontend application.",
+    "imports": [
+      "No imports found."
+    ],
+    "methods/functions": [
+      "default"
+    ]
+  },
+  "src/App.tsx": {
+    "description": "Main application component that sets up routing for different pages in the React application.",
+    "imports": [
+      "import { BrowserRouter, Routes, Route } from 'react-router-dom';",
+      "import HomePage from '@/pages/home-page';",
+      "import AddBlog from '@/pages/add-blog';",
+      "import DetailsPage from '@/pages/details-page';",
+      "import ScrollToTop from '@/components/scroll-to-top';",
+      "import Footer from '@/layouts/footer-layout';",
+      "import SignIn from '@/pages/signin-page';",
+      "import SignUp from '@/pages/signup-page';",
+      "import AdminUsers from '@/pages/admin-users';",
+      "import AdminBlogs from '@/pages/admin-blogs';",
+      "import NotFound from '@/pages/not-found';",
+      "import UnprotectedRoute from './components/unprotected-route';",
+      "import { useLayoutEffect } from 'react';",
+      "import RequireAuth from './components/require-auth-blog';",
+      "import RequireAuthBlog from './components/require-auth-blog';",
+      "import useThemeClass from './utils/theme-changer';",
+      "import AdminContainer from './components/admin-container';",
+      "import { Role } from './types/role-type.tsx';",
+      "import EditBlog from './pages/edit-blog.tsx';"
+    ],
+    "methods/functions": [
+      "App",
+      "default"
+    ]
+  },
+  "src/assets/svg/bars-icon.tsx": {
+    "description": "React component rendering the bars icon as an SVG element.",
+    "imports": [
+      "No imports found."
+    ],
+    "methods/functions": [
+      "default"
+    ]
+  },
+  "src/assets/svg/blog-icon.tsx": {
+    "description": "React component rendering the blog icon as an SVG element.",
+    "imports": [
+      "No imports found."
+    ],
+    "methods/functions": [
+      "default"
+    ]
+  },
+  "src/assets/svg/pen-icon.tsx": {
+    "description": "React component rendering the pen icon as an SVG element.",
+    "imports": [
+      "No imports found."
+    ],
+    "methods/functions": [
+      "default"
+    ]
+  },
+  "src/assets/svg/trash-icon.tsx": {
+    "description": "React component rendering the trash icon as an SVG element.",
+    "imports": [
+      "No imports found."
+    ],
+    "methods/functions": [
+      "default"
+    ]
+  },
+  "src/assets/svg/user-icon.tsx": {
+    "description": "React component rendering the user icon as an SVG element.",
+    "imports": [
+      "No imports found."
+    ],
+    "methods/functions": [
+      "default"
+    ]
+  },
+  "frontend/components/admin-container.tsx": {
+    "description": "Component that provides a layout for the admin section, including the sidebar and main content area.",
+    "imports": [
+      "import AdminSidebar from '@/components/admin-sidebar';",
+      "import { Outlet } from 'react-router-dom';"
+    ],
+    "methods/functions": [
+      "default"
+    ]
+  },
+  "frontend/components/admin-sidebar.tsx": {
+    "description": "Component that renders the sidebar for the admin section, allowing navigation between different admin pages.",
+    "imports": [
+      "import { NavLink, useNavigate } from 'react-router-dom';",
+      "import UserIcon from '@/assets/svg/user-icon';",
+      "import BlogIcon from '@/assets/svg/blog-icon';",
+      "import BarIcons from '@/assets/svg/bars-icon';",
+      "import { useState } from 'react';",
+      "import CloseIcon from '@/assets/svg/close-icon';"
+    ],
+    "methods/functions": [
+      "default"
+    ]
+  },
+  "frontend/components/blog-feed.tsx": {
+    "description": "Component that fetches and displays a feed of blog posts, including featured and latest posts.",
+    "imports": [
+      "import axios from 'axios';",
+      "import { useEffect, useState } from 'react';",
+      "import FeaturedPostCard from '@/components/featured-post-card';",
+      "import LatestPostCard from '@/components/latest-post-card';",
+      "import { FeaturedPostCardSkeleton } from '@/components/skeletons/featured-post-card-skeleton';",
+      "import { LatestPostCardSkeleton } from '@/components/skeletons/latest-post-card-skeleton';",
+      "import CategoryPill from '@/components/category-pill';",
+      "import { categories } from '@/utils/category-colors';"
+    ],
+    "methods/functions": [
+      "default"
+    ]
+  },
+  "frontend/components/category-pill.tsx": {
+    "description": "Component that renders a pill-style label for blog post categories.",
+    "imports": [
+      "import { categoryColors } from '@/utils/category-colors';"
+    ],
+    "methods/functions": [
+      "default"
+    ]
+  },
+  "frontend/components/featured-post-card.tsx": {
+    "description": "Component that displays a featured blog post with its title, description, and image.",
+    "imports": [
+      "import { useNavigate } from 'react-router-dom';",
+      "import { FeaturedPostCardSkeleton } from '@/components/skeletons/featured-post-card-skeleton';"
+    ],
+    "methods/functions": [
+      "default"
+    ]
+  },
+  "frontend/components/form-blog.tsx": {
+    "description": "Component that renders a form for creating or editing blog posts.",
+    "imports": [
+      "import { useForm } from 'react-hook-form';",
+      "import { zodResolver } from '@hookform/resolvers/zod';",
+      "import { useNavigate } from 'react-router-dom';",
+      "import { z } from 'zod';"
+    ],
+    "methods/functions": [
+      "default"
+    ]
+  },
+  "frontend/components/hero.tsx": {
+    "description": "Component that displays the hero section of the homepage, usually featuring a prominent image and title.",
+    "imports": [
+      "import HeroImage from '@/assets/wanderlustbg.webp';"
+    ],
+    "methods/functions": [
+      "default"
+    ]
+  },
+  "frontend/components/latest-post-card.tsx": {
+    "description": "Component that displays the latest blog post with its title and a brief description.",
+    "imports": [
+      "import { LatestPostCardSkeleton } from '@/components/skeletons/latest-post-card-skeleton';"
+    ],
+    "methods/functions": [
+      "default"
+    ]
+  },
+  "frontend/components/modal.tsx": {
+    "description": "Component that renders a modal dialog for various interactions like confirmation, input, etc.",
+    "imports": [
+      "import { useState } from 'react';"
+    ],
+    "methods/functions": [
+      "default"
+    ]
+  },
+  "frontend/components/post-card.tsx": {
+    "description": "Component that renders a card displaying a blog post with its title, image, and summary.",
+    "imports": [
+      "import { PostCardSkeleton } from '@/components/skeletons/post-card-skeleton';"
+    ],
+    "methods/functions": [
+      "default"
+    ]
+  },
+  "frontend/components/PostMobileViewCardSkeleton.tsx": {
+    "description": "Skeleton component that renders a placeholder for a mobile view of a blog post card while data is loading.",
+    "imports": [
+      "import { Skeleton } from '@/components/ui/skeleton';"
+    ],
+    "methods/functions": [
+      "default"
+    ]
+  },
+  "frontend/components/PostMobileViewComponent.tsx": {
+    "description": "Component that renders the mobile view of a blog post card, optimized for smaller screens.",
+    "imports": [
+      "import { PostMobileViewCardSkeleton } from '@/components/skeletons/post-mobile-view-card-skeleton';"
+    ],
+    "methods/functions": [
+      "default"
+    ]
+  },
+  "frontend/components/require-auth-blog.tsx": {
+    "description": "Higher-order component that requires the user to be authenticated before accessing certain blog routes.",
+    "imports": [
+      "import { Navigate } from 'react-router-dom';",
+      "import useAuth from '@/hooks/useAuth';"
+    ],
+    "methods/functions": [
+      "default"
+    ]
+  },
+  "frontend/components/require-auth.tsx": {
+    "description": "Higher-order component that requires the user to be authenticated before accessing protected routes.",
+    "imports": [
+      "import { Navigate } from 'react-router-dom';",
+      "import useAuth from '@/hooks/useAuth';"
+    ],
+    "methods/functions": [
+      "default"
+    ]
+  },
+  "frontend/components/scroll-to-top.tsx": {
+    "description": "Component that scrolls the window to the top when the user navigates to a new page.",
+    "imports": [
+      "import { useEffect } from 'react';",
+      "import { useLocation } from 'react-router-dom';"
+    ],
+    "methods/functions": [
+      "default"
+    ]
+  },
+  "frontend/components/skeletons/add-blog-post-skeleton.tsx": {
+    "description": "Skeleton component that renders a placeholder for the add blog post form while data is loading.",
+    "imports": [
+      "import { Skeleton } from '@/components/ui/skeleton';"
+    ],
+    "methods/functions": [
+      "default"
+    ]
+  },
+  "frontend/components/skeletons/featured-post-card-skeleton.tsx": {
+    "description": "Skeleton component that renders a placeholder for a featured post card while data is loading.",
+    "imports": [
+      "import { Skeleton } from '@/components/ui/skeleton';"
+    ],
+    "methods/functions": [
+      "default"
+    ]
+  },
+  "frontend/components/skeletons/latest-post-card-skeleton.tsx": {
+    "description": "Skeleton component that renders a placeholder for a latest post card while data is loading.",
+    "imports": [
+      "import { Skeleton } from '@/components/ui/skeleton';"
+    ],
+    "methods/functions": [
+      "default"
+    ]
+  },
+  "frontend/components/skeletons/loader.tsx": {
+    "description": "Component that renders a loading spinner or animation.",
+    "imports": [
+      "No imports found."
+    ],
+    "methods/functions": [
+      "default"
+    ]
+  },
+  "frontend/components/skeletons/post-card-skeleton.tsx": {
+    "description": "Skeleton component that renders a placeholder for a post card while data is loading.",
+    "imports": [
+      "import { Skeleton } from '@/components/ui/skeleton';"
+    ],
+    "methods/functions": [
+      "default"
+    ]
+  },
+  "frontend/components/skeletons/related-post-card-skeleton.tsx": {
+    "description": "Skeleton component that renders a placeholder for related post cards while data is loading.",
+    "imports": [
+      "import { Skeleton } from '../ui/skeleton';"
+    ],
+    "methods/functions": [
+      "default"
+    ]
+  },
+  "frontend/components/theme-toggle-button.tsx": {
+    "description": "Component that toggles the application's theme between light and dark modes.",
+    "imports": [
+      "import { useLayoutEffect, useState } from 'react';",
+      "import Sun from '@/assets/svg/sun.svg';",
+      "import Moon from '@/assets/svg/moon.svg';",
+      "import useThemeClass from '@/utils/theme-changer';"
+    ],
+    "methods/functions": [
+      "default"
+    ]
+  },
+  "frontend/components/ui/skeleton.tsx": {
+    "description": "Utility component for rendering a skeleton placeholder, used for loading states.",
+    "imports": [
+      "import { cn } from '@/lib/utils';"
+    ],
+    "methods/functions": [
+      "default"
+    ]
+  },
+  "frontend/components/unprotected-route.tsx": {
+    "description": "Component that handles routes accessible without authentication, redirecting authenticated users away.",
+    "imports": [
+      "import { Navigate, Outlet } from 'react-router-dom';",
+      "import useAuthData from '@/hooks/useAuthData';"
+    ],
+    "methods/functions": [
+      "default"
+    ]
+  },
+  "frontend/config/jest/file-mock.ts": {
+    "description": "Configuration file for mocking files during Jest testing.",
+    "imports": [
+      "No imports found."
+    ],
+    "methods/functions": [
+      "module.exports = 'test-file-stub';"
+    ]
+  },
+  "frontend/config/jest/setup-tests.ts": {
+    "description": "Setup file for Jest, configuring the testing environment with additional matchers and utilities.",
+    "imports": [
+      "import '@testing-library/jest-dom';"
+    ],
+    "methods/functions": []
+  },
+  "frontend/config/jest/style-mock.ts": {
+    "description": "Configuration file for mocking style files during Jest testing.",
+    "imports": [
+      "No imports found."
+    ],
+    "methods/functions": [
+      "module.exports = {};"
+    ]
+  },
+  "frontend/constants/images.ts": {
+    "description": "File defining constants related to image URLs used in the application.",
+    "imports": [
+      "No imports found."
+    ],
+    "methods/functions": []
+  },
+  "frontend/helpers/axios-instance.ts": {
+    "description": "Helper file that sets up and exports a pre-configured Axios instance for making HTTP requests.",
+    "imports": [
+      "import axios from 'axios';",
+      "import { BASE_API_URL } from '@/constants/api';"
+    ],
+    "methods/functions": []
+  },
+  "frontend/hooks/useAuthData.ts": {
+    "description": "Custom hook that provides authentication data and utility functions for managing user authentication.",
+    "imports": [
+      "import { useContext } from 'react';",
+      "import { AuthContext } from '@/context/auth-context';"
+    ],
+    "methods/functions": []
+  },
+  "frontend/index.css": {
+    "description": "Main CSS file for the frontend application, defining global styles and theme configurations.",
+    "imports": [
+      "No imports found."
+    ],
+    "methods/functions": []
+  },
+  "frontend/layouts/footer-layout.tsx": {
+    "description": "Layout component rendering the footer section of the application, typically used across multiple pages.",
+    "imports": [
+      "No imports found."
+    ],
+    "methods/functions": [
+      "FooterLayout"
+    ]
+  },
+  "frontend/layouts/header-layout.tsx": {
+    "description": "Layout component rendering the header section of the application, including navigation and branding.",
+    "imports": [
+      "import { NavLink } from 'react-router-dom';",
+      "import ThemeToggle from '@/components/theme-toggle-button';"
+    ],
+    "methods/functions": [
+      "HeaderLayout"
+    ]
+  },
+  "frontend/lib/types.ts": {
+    "description": "File defining TypeScript types used throughout the application for consistency and type safety.",
+    "imports": [
+      "No imports found."
+    ],
+    "methods/functions": []
+  },
+  "frontend/lib/utils.ts": {
+    "description": "Utility functions used across the application, providing common functionalities like string manipulation and data formatting.",
+    "imports": [
+      "No imports found."
+    ],
+    "methods/functions": []
+  },
+  "frontend/main.tsx": {
+    "description": "Main entry point for the frontend application, rendering the root component and setting up the React application.",
+    "imports": [
+      "import React from 'react';",
+      "import ReactDOM from 'react-dom';",
+      "import App from '@/App';",
+      "import '@/index.css';"
+    ],
+    "methods/functions": [
+      "main"
+    ]
+  },
+  "frontend/pages/add-blog.tsx": {
+    "description": "Page component rendering the form to add a new blog post, including validation and submission logic.",
+    "imports": [
+      "import FormBlog from '@/components/form-blog';"
+    ],
+    "methods/functions": [
+      "AddBlog"
+    ]
+  },
+  "frontend/pages/admin-blogs.tsx": {
+    "description": "Admin page for managing blog posts, including viewing, editing, and deleting posts.",
+    "imports": [
+      "import AdminContainer from '@/components/admin-container';",
+      "import BlogFeed from '@/components/blog-feed';"
+    ],
+    "methods/functions": [
+      "AdminBlogs"
+    ]
+  },
+  "frontend/pages/admin-users.tsx": {
+    "description": "Admin page for managing users, including viewing, editing, and deleting user accounts.",
+    "imports": [
+      "import AdminContainer from '@/components/admin-container';"
+    ],
+    "methods/functions": [
+      "AdminUsers"
+    ]
+  },
+  "frontend/pages/details-page.tsx": {
+    "description": "Page component rendering the details of a specific blog post, including its content and related posts.",
+    "imports": [
+      "import PostCard from '@/components/post-card';",
+      "import PostMobileViewComponent from '@/components/PostMobileViewComponent';"
+    ],
+    "methods/functions": [
+      "DetailsPage"
+    ]
+  },
+  "frontend/pages/edit-blog.tsx": {
+    "description": "Page component rendering the form to edit an existing blog post, including validation and submission logic.",
+    "imports": [
+      "import FormBlog from '@/components/form-blog';"
+    ],
+    "methods/functions": [
+      "EditBlog"
+    ]
+  },
+  "frontend/pages/home-page.tsx": {
+    "description": "Home page of the application, featuring a hero section, blog feed, and other main content.",
+    "imports": [
+      "import Hero from '@/components/hero';",
+      "import BlogFeed from '@/components/blog-feed';"
+    ],
+    "methods/functions": [
+      "HomePage"
+    ]
+  },
+  "frontend/pages/not-found.tsx": {
+    "description": "Page component rendering a 404 error message for when a user navigates to a non-existent route.",
+    "imports": [
+      "import { Link } from 'react-router-dom';"
+    ],
+    "methods/functions": [
+      "NotFound"
+    ]
+  },
+  "frontend/pages/signin-page.tsx": {
+    "description": "Page component rendering the sign-in form, including validation and authentication logic.",
+    "imports": [
+      "import { Link, useNavigate } from 'react-router-dom';",
+      "import { useForm } from 'react-hook-form';",
+      "import { zodResolver } from '@hookform/resolvers/zod';",
+      "import { toast } from 'react-toastify';",
+      "import axiosInstance from '@/helpers/axios-instance';"
+    ],
+    "methods/functions": [
+      "SigninPage"
+    ]
+  },
+  "frontend/pages/signup-page.tsx": {
+    "description": "Page component rendering the sign-up form, including validation and user registration logic.",
+    "imports": [
+      "import { Link, useNavigate } from 'react-router-dom';",
+      "import { useForm } from 'react-hook-form';",
+      "import { zodResolver } from '@hookform/resolvers/zod';",
+      "import { toast } from 'react-toastify';",
+      "import axiosInstance from '@/helpers/axios-instance';"
+    ],
+    "methods/functions": [
+      "SignupPage"
+    ]
+  },
+  "frontend/types/post-type.tsx": {
+    "description": "Exports functionality: export default Post;.",
+    "imports": [
+      "No imports found."
+    ],
+    "methods/functions": [
+      "default"
+    ]
+  },
+  "frontend/types/role-type.tsx": {
+    "description": "Exports functionality: export enum Role {.",
+    "imports": [
+      "No imports found."
+    ],
+    "methods/functions": [
+      "enum"
+    ]
+  },
+  "frontend/types/test-props.ts": {
+    "description": "Exports functionality: export type { TestProps };.",
+    "imports": [
+      "No imports found."
+    ],
+    "methods/functions": [
+      "type"
+    ]
+  },
+  "frontend/utils/category-colors.ts": {
+    "description": "Exports functionality: export const categories: string[] = Array.from(categoryColors.keys());. Exports functionality: export function getCategoryColors(category: string): [string, string] {.",
+    "imports": [
+      "No imports found."
+    ],
+    "methods/functions": [
+      "const",
+      "function",
+      "function"
+    ]
+  },
+  "frontend/utils/format-post-time.tsx": {
+    "description": "Exports functionality: export default function formatPostTime(time: string) {.",
+    "imports": [
+      "No imports found."
+    ],
+    "methods/functions": [
+      "default",
+      "default"
+    ]
+  },
+  "frontend/utils/slug-generator.ts": {
+    "description": "Exports functionality: export function createSlug(title: string): string {.",
+    "imports": [
+      "No imports found."
+    ],
+    "methods/functions": [
+      "function",
+      "function"
+    ]
+  },
+  "frontend/utils/theme-changer.ts": {
+    "description": "Exports functionality: export default useThemeClass;.",
+    "imports": [
+      "No imports found."
+    ],
+    "methods/functions": [
+      "default"
+    ]
+  },
+  "frontend/utils/user-state.ts": {
+    "description": "Exports functionality: export const userState = atom<UserState | null>({ key: 'userState', default: null });.",
+    "imports": [
+      "No imports found."
+    ],
+    "methods/functions": [
+      "const"
+    ]
+  },
+  "frontend/tailwind.config.js": {
+    "description": "Configuration file for Tailwind CSS, defining the styles, colors, and responsive breakpoints for the project.",
+    "imports": [
+      "No imports found."
+    ],
+    "methods/functions": [
+      "No methods/functions found."
+    ]
+  },
+  "frontend/test-setup.ts": {
+    "description": "Setup file for testing, configuring the testing environment with utilities and global settings.",
+    "imports": [
+      "import { afterAll, afterEach, beforeAll } from 'vitest';",
+      "import { cleanup } from '@testing-library/react';",
+      "import '@testing-library/jest-dom/vitest';",
+      "import { server } from './src/__tests__/mocks/node-mock';"
+    ],
+    "methods/functions": [
+      "each"
+    ]
+  },
+  "frontend/tsconfig.json": {
+    "description": "Configuration file for TypeScript, defining compiler options and project settings.",
+    "imports": [
+      "No imports found."
+    ],
+    "methods/functions": [
+      "No methods/functions found."
+    ]
+  },
+  "frontend/tsconfig.node.json": {
+    "description": "Configuration file for TypeScript, tailored for Node.js environments.",
+    "imports": [
+      "No imports found."
+    ],
+    "methods/functions": [
+      "No methods/functions found."
+    ]
+  },
+  "frontend/tsconfig.prod.json": {
+    "description": "Production-specific configuration file for TypeScript, defining optimized compiler settings.",
+    "imports": [
+      "No imports found."
+    ],
+    "methods/functions": [
+      "No methods/functions found."
+    ]
+  },
+  "frontend/vercel.json": {
+    "description": "Configuration file for deploying the application on Vercel, specifying settings like rewrites and redirects.",
+    "imports": [
+      "No imports found."
+    ],
+    "methods/functions": [
+      "No methods/functions found."
+    ]
+  },
+  "frontend/vite.config.ts": {
+    "description": "Configuration file for Vite, setting up plugins, aliases, and testing configurations.",
+    "imports": [
+      "import { defineConfig, UserConfig } from 'vitest/config';",
+      "import react from '@vitejs/plugin-react-swc';",
+      "import path from 'path';",
+      "import { configDefaults } from 'vitest/config';"
+    ],
+    "methods/functions": [
+      "default"
+    ]
+  },
+  "package.json": {
+    "description": "Configuration file for managing project dependencies, scripts, and metadata for the application.",
+    "dependencies": {
+      "concurrently": "^8.2.2",
+      "js-cookie": "^3.0.5"
+    },
+    "devDependencies": {
+      "husky": "^8.0.0"
+    },
+    "scripts": {
+      "start-frontend": "cd frontend && npm run dev",
+      "start-backend": "cd backend && npm start",
+      "start": "concurrently -n \"FRONTEND,BACKEND\" -c \"bgBlue,bgYellow\" -p \"[{name}]\" \"npm run start-frontend\" \"npm run start-backend\"",
+      "install-frontend": "cd frontend && npm i",
+      "install-backend": "cd backend && npm i",
+      "installer": "npm i && npm run install-backend && npm run install-frontend",
+      "prepare": "husky install && chmod ug+x .husky/*"
+    },
+    "version": "No version specified."
+  }
 }
-
-}
-
-
-
-
-
-
-
-    
-
-
-
